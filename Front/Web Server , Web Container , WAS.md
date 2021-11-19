@@ -58,12 +58,14 @@
    - &nbsp;WAS는 여러개가 연결 가능하기 때문에 Load Balancing을 위해 Web Server를 사용한다.
    - &nbsp;fail over(장애 극복), fail back 처리에 유리하다. 특히 대용량 웹 어플리케이션 같은 경우 여러개의 서버를 사용하기 때문에 Web Server와 WAS를 분리하여 무중단 배포(운영)에 대한 장애 극복에 쉽게 대응할 수 있다. 예를 들어 앞 단의 WebServer에서 오류가 발생한 WAS를 이용하지 못하도록 한 후 WAS를 재시작함으로써 사용자는 오류를 느끼지 못하고 이용할 수 있다.
    - &nbsp;여러 웹 애플리케이션 서비스가 가능한데, 하나의 서버에서 PHP Application과 Java Application을 함께 사용하는 경우이다. 또한 접근 허용 IP를 관리하고 2대 이상의 서버에서 세션 관리 등도 Web Sever에서 처리하면 효율적이기에 Web Server와 WAS를 분리한다.
+   -
 
 ## Web Service Architecture<br>
 1. Client --> Web Server --> DB
 2. Client --> WAS --> DB
 3. Client --> Web Server --> WAS --> DB
 ![Client --> Web Server --> WAS --> DB](https://gmlwjd9405.github.io/images/web/web-service-architecture.png)<br>
+
 
 - &nbsp;3번의 동작 과정<br>
    - &nbsp;Web Server는 웹 브라우저 클라이언트로부터 HTTP 요청을 받는다.
@@ -77,7 +79,9 @@
    - &nbsp;WAS는 Response 객체를 HttpResponse 형태로 바꾸어 Web Server에 전달한다.
    - &nbsp;생성된 Thread를 종료하고, HttpServletRequest와 HttpServletResponse 객체를 제거한다.
 
-
+## 결론
+- &nbsp;Tomcat같은 WAS 앞 단에 Apache, IIS 같은 Web Server를 연동한다. 이는 위에 말했듯이 기능을 분리하면서 얻는 성능 향상, 보안상의 이유 그리고 효율성 및 장애극복, 유지보수 편의성 등이 있기 때문이다.<br>
+&nbsp;따라서 우리는 Web Server와 WAS의 목적에 맞게, 기능에 맞게 사용해야할 것이다.
 
 ## 용어 정리<br>
 - &nbsp;정적 컨텐츠(Static) : DB에서 정보를 가져오거나 별도로 서버에서의 처리가 없어도 사용자들에게 보여줄 수 있는 컨텐츠. 어떠한 사용자가 오던 간에 동일한 컨텐츠를 보여준다.<br>     
