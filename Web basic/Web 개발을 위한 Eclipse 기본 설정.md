@@ -1,5 +1,4 @@
 # Web 개발을 위한 Eclipse 기본 설정
--------------------------------
 
 ## Encoding 설정 방법
 - Window tab --> Preference --> encoding 검색<br>
@@ -32,9 +31,36 @@
 -----------------------------
 
 ## Eclipse에서 Sever 등록하는 법
-- ㅉ
+- Window tab --> Show View --> Servers --> Apache file --> Tomcat 9.0 --> Next<br>
+Tomcat 최상위 폴더로 경로 설정 --> 파일 Add --> Finish
 
+## 서버 등록 확인하는 법
+- Buildpath --> Web APP Library가 있다면 성공
 
+## 웹 브라우저 설정
+- Window --> Web browser --> 원하는 브라우저 설정
+
+## 프로젝트 생성시 주의할점(서버 추가 후)
+- Target runtime--> APACHE Tomcat v9.0 설정
+- web.xml 체크 후 생성
+
+-------------------------------
+
+## 웹 버전 프로젝트 베포 및 받는 하는 법 
+- 프로젝트 우클릭 --> WAR file --> destination(다운받을 경로지정) --> Export source files(Java 파일까지 베포) --> Finish
+
+- 프로젝트 우클릭 --> import --> WAR file --> Browser --> Finish
+
+----------------------------
+# 기타 
+
+## 경로 지정 
+- 상대경로 : 현재 위치한 페이지(파일)을 기준으로 찾아가는 경로
+   - ./ : 현재폴더(./파일이름 or 파일이름)
+   -  ../ 상위폴더(../들어갈폴더 or 파일이름)
+
+- 절대경로 : 현재 어떤 폴더에 있던 간 최상위 경로부터 하나씩 타고 들어가 찾아갈 수 있게 작성한 경로
+   - C:\\~~~~~~~ or D:\\~~~~~~~
 
 
 
