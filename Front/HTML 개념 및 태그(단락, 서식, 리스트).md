@@ -5,7 +5,7 @@
 	브라우저에게 알려주는 언어이다. HTML을 브라우저에게 데이터를 전달하고 브라우저는 우리에게 GUI를 통해 시각화해주는 것이다.
   
 ## HTML의 요소의 개념과 종류
-```
+```html
 <p>HIHIHI IM SEONG HO</p>
 ```
 - 여는 태그(Opening Tag) : 요소의 이름(p)와 열고 닫는 꺽쇠 괄호로 구성되어 있다.
@@ -14,7 +14,7 @@
 > &nbsp;위의 것들을 통틀어 요소라고 하며 요소의 이름은 대소문자를 구분하지 않지만 가독성에 있어 소문자로 작성하는 것을 권장한다.
 
 
-```
+```html
 <p>HIHIHI IM SEONG HO<b>WHATWHAT</b></p>
 ```
 - 내포된 요소(Nested Elements) : 요소 안에 다른 요소를 넣는 기법. 구조가 겹겹이 쌓이는 것
@@ -22,7 +22,7 @@
 ### 단락 태그(Paragraph Tag) 
 -  단락이란 내용상 끊어서 구분할 수 있는 하나하나의 부분을 의미하고 문단이라고 부른다.
   
-```
+```html
 <!DOCTYPE html>
 <html>
 <head>
@@ -64,8 +64,7 @@
 ```
 
 ### 서식 태그
- ```
-
+ ```html
 <!DOCTYPE html>
 <html>
 <head>
@@ -120,7 +119,7 @@
    - dt(definition term) : 용어의 제목을 넣을 때 사용한다.
    - dd(definition description) : 용어를 설명하는데 사용한다.
 
-```
+```html
 <!DOCTYPE html>
 <html>
 <head>
