@@ -27,7 +27,7 @@
 - Port 번호
    - 컴퓨터 안에서 작동하는 애플리케이션을 식벽하기 위해 사욛하는숫자이다.
 
-### jsp를 이용한 form 태그 
+### form 태그 
 ```jsp
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
