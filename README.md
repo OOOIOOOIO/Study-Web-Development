@@ -17,5 +17,5 @@
 
 ---------------------------
 ## Back
-- [JSP 개념]()
-- [Servlet 개념]()
+- [JSP & JavaBeans 개념](https://github.com/OOOIOOOIO/Web_development/blob/master/Back/JSP%20&%20JavaBeans.md)
+- [Servlet 개념](https://github.com/OOOIOOOIO/Web_development/blob/master/Back/Servlet.md)
