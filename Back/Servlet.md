@@ -95,13 +95,9 @@
 
 #### 응답 처리 방법
 - doGet()이나 doPost() 메서드 안에서 처리
-- 
 - HttpServletRequest request 객체를 이용해 클라이언트의 요청으로부터 들어온 파라미터에 대한 값을 request.getParameter(""); 얻어온다.
-- 
 - HttpServletResponse response 객체와 PrintWriter out 객체를 이용하여 PrintWriter out = response.getWriter(); 형식으로 응답으로 내보낼 출력 스트림을 얻어낸 후 out.println("");으로 스트림에 텍스트를 기록하게 된다.
-
 - setContentType()을 이용해 클라이언트에 전송할 데이터 종류(MIME-TYPE) 지정
-
 - 클라이언트와 서블릿의 통신은 자바 I/O 스트림을 이용함
 
  
