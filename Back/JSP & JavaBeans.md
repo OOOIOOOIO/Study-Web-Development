@@ -215,7 +215,7 @@
 		jsp.setProperty는 외부에서 날라온 파라미터 중에 같은 name을 가지고 있는 것이 있다면
 		value 속성을 작성하지 않더라도 값이 자동으로 들어간다.
     
-    	DTO 객체의 필드명(변수명)들을  jsp 파라미터의 name(input의 name)과 동일하게 맞춰주면 
+    		DTO 객체의 필드명(변수명)들을  jsp 파라미터의 name(input의 name)과 동일하게 맞춰주면 
   		각각 설정하지 않고 property="*" 해주면 끝이기 때문에 사용하기 편하다.
     
 		form 태그의 action을 통해 받은 input 값들을 setProperty가 newUser javaBean(자바 객체)의 속성값(변수값)으로 설정해준다. 
