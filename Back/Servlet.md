@@ -1,6 +1,5 @@
 # HTML Form and Servlet
-
-<hr/>
+<br>
 
 ## Web Service의 기본적인 동작 과정
 
@@ -10,6 +9,7 @@
 	<li>Servlet의 doGet 혹은 doPost 메서드는 입력한 form data에 맞게 DB 또는 다른 소스에서 관련된 정보를 검색한다.</li>
 	<li>이 정보를 이용하여 사용자의 요청에 맞는 적절한 동적 컨텐츠(HTML page)를 만들어서 제공한다.(Oupput)</il>
 </ol>
+<br>
 
 ## HTML Form
 
@@ -26,6 +26,7 @@
    - browser와 WAS가 같은 PC에 있으면 IP 주소 == localhost 이다.
 - Port 번호
    - 컴퓨터 안에서 작동하는 애플리케이션을 식벽하기 위해 사욛하는숫자이다.
+<br>
 
 ### form 태그 
 ```jsp
@@ -64,6 +65,7 @@
 </body>
 </html>
 ```
+<br>
 
 #### Form Tag 속성
 - name : form을 식별하기 위한 이름 지정
@@ -72,8 +74,7 @@
 - target : action에서 지정한 스크립트 파일을 현재 창이 아닌 다른 위치에서 열리도록 지정
 - accept-charset : form 전송에 사용할 문자 인코딩을 지정
 - enctype : 넘기는 Content의 Type 지정(주로 파일을 넘길 때 사용)
-
-<hr/>
+<br>
 
 ## 서블릿(Servlet)
 
@@ -99,7 +100,7 @@
 - HttpServletResponse response 객체와 PrintWriter out 객체를 이용하여 PrintWriter out = response.getWriter(); 형식으로 응답으로 내보낼 출력 스트림을 얻어낸 후 out.println("");으로 스트림에 텍스트를 기록하게 된다.
 - setContentType()을 이용해 클라이언트에 전송할 데이터 종류(MIME-TYPE) 지정
 - 클라이언트와 서블릿의 통신은 자바 I/O 스트림을 이용함
-
+<br>
  
 ## MIME-TYPE
 - 서버에서 클라이언트에게 데이터를 전송할 때는 어떤 종류의 데이터를 전송하는지 알려줘야함(클라이언트가 더 빠르게 처리할 수 있도록)
@@ -115,7 +116,7 @@
 - XML 데이터로 전송시 : application/xml
 
 - 새로운 종류의 데이터를 지정하고 싶으면 CATALINA_HOME\conf\web.xml 수정
-
+<br>
 
 ## 서블릿 
 ```java
@@ -170,7 +171,6 @@ public class MyServlet extends HttpServlet {
 }
 
 ```
-
 #### HttpServletRequest request 객체
 - 사용자가 HTML Form에 입력한 내용(userid, username, ..)을 request 객체에서 받아온다.
    -  즉 HTTP 프로토콜의 Request 정보를 Servlet에 전달
@@ -183,7 +183,7 @@ public class MyServlet extends HttpServlet {
 - response.setContetType : 인자의 내용에 맞게 동적인 HTML 코드를 생성하여 response 객체에 담아 반환한다.
 - PrintWriter out = response.getWriter() : 응답으로 내보낼 출력 스트림을 얻어낸 후 out.println("");으로 스트림에 텍스트를 기록하게 된다.
 - out 객체를 통해 Web page(view 생성)에 텍스트를 반환한다.
-
+<br>
 
 ## web.xml 설정
 ```html
