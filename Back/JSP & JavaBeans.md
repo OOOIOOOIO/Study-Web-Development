@@ -1,9 +1,11 @@
 # JSP & JavaBeans
+<br>
 
 ## JSP(Java Server Page)
 - &nbsp;Jsp란 HTML 중심으로 Java와 같이 연동하여 사용하는 웹 언어이다. HTML코드 안에 Java 코드를 작성할 수 있도록 도와주는 언어이다.
 - Servlet의 모든 기능 + 추가적인 기능을 제공한다.
 지금은 잘 안 쓰고 타임리프와 같은 라이브러리를 사용한다.
+<br>
 
 ## JSP 내부적인 동작 과정
 - JSP 문서는 background에서 Servlet으로 자동 변환된다.
@@ -17,6 +19,7 @@
    - 각 thread는 Servlet의 단일 객체에 대한 service() 메서드를 실행한다.
    - service() 메서드는 요청에 맞는 적절한 메서드(doGet, doPost 등)를 호출한다.
 3. 수행 후 생성된 데이터를 웹 페이지와 함께 클라이언트에게 응답한다.
+<br>
 
 ## JSP의 특징
 - HTML기반 스크립트 언어이기 때문에 HTML + JAVA 기능을 그대로 사용할 수 있다.
@@ -24,6 +27,7 @@
    - JSTL(JSP Standard Tag Library) 사용
 - Servlet과 다르게 JSP는 수정된 경우 재배포 할 필요 없이 WAS에서 처리해준다.
 - Tomcat(WAS)이 이미 만들어 놓은 객체를 사용한다.
+<br>
 
 ## JSP가 제공하는 기본 객체
 - request : javax.servlet.HttpServletRequest / HttpServletRequest Object
@@ -44,15 +48,20 @@
    - JSP페이지를 구현한 자바 클래스 인스턴스
 - exception : javax.lang.Throwable 
    - 에러페이지에서만 사용 가능하다
+<br>
 
 ## 기본 객체의 속성
 #### pageContext, request, session, application는 속성을 갖고 있다. 속성은 각각의 기본 객체가 존재하는 동안 사용될 수 있고, JSP 페이지 사이에서 정보를 주고 받거나 공유하기 위한 목적으로 사용된다.
 
-- setAttribute(String name, Object value) : 이름이 name인 속성의 값을 value로 지정한다. return type : void
-- getAttribute(String name) : 이름이 name인 속성의 값을 구한다. 존재하지 않을 경우 null을 반환한다. return type : Object
-- removeAttribute(String name) : 이름이 name인 속성을 삭제한다. return type : void
-- getAttributeNames() : 속성의 이름 목록을 구한다.(pageContext 제외) : return type : Enumeration
-
+- setAttribute(String name, Object value) 
+   -  이름이 name인 속성의 값을 value로 지정한다. return type : void
+- getAttribute(String name) 
+   - 이름이 name인 속성의 값을 구한다. 존재하지 않을 경우 null을 반환한다. return type : Object
+- removeAttribute(String name) 
+   - 이름이 name인 속성을 삭제한다. return type : void
+- getAttributeNames() 
+   - 속성의 이름 목록을 구한다.(pageContext 제외) : return type : Enumeration
+<br>
 
 ## Script tag
 #### 개념 : Script tag를 이용해 HTML 내부(body)에 자바 코드를 넣어 프로그래밍이 가능하도록 만들 수 있다. 끝에 세미콜론(;)을 붙이지 않는다.
@@ -80,24 +89,30 @@
    -  <%@ include file="파일명" %>
   
 - 주석(comment) : <%-- comment --%>
+<br>
 
 ## 액션 태그
+
 #### 개념 : 서버나 클라이언트에게 어떤 행동을 하도록 명령하는 태그. 페이지와 페이지 사이를 제어하거나 다른 페이지의 실행 결과 내용을 현재 페이지에 포함시키거나 자바빈즈(객체) 등의 다양한 기능을 제공한다. 액션태그는 XML 형식인 <jsp: />를 이용한다.
-
--	<jsp:forward /> 	: 다른 페이지로 이동, 페이지의 흐름을 제어하기 위한 역할
--	<jsp:param /> 	: 현재 페이지에서 다른 페이지에 값을 전달하기 위한 역할 
--	<jsp:useBean /> : 해당하는 Bean(자바 객체)이 이미 존재하는지 확인하고 없다면 지정된 객체를 생성한다.(객체는 .java 파일이며 주로 DTO이다.)
--	<jsp:setProperty /> : Bean(자바 객체)의 속성을 설정한다.
--	<jsp:getProperty /> : 주어진 속성값을 가져오며 이를 문자열로 변환하고 동적인 웹페이지를 생성하는데 사용할 수 있다.
-
+- <jsp:forward /> 	
+   - 다른 페이지로 이동, 페이지의 흐름을 제어하기 위한 역할
+- <jsp:param /> 	
+   - 현재 페이지에서 다른 페이지에 값을 전달하기 위한 역할 
+- <jsp:useBean /> 
+   - 해당하는 Bean(자바 객체)이 이미 존재하는지 확인하고 없다면 지정된 객체를 생성한다.(객체는 .java 파일이며 주로 DTO이다.)
+- <jsp:setProperty /> 
+   - Bean(자바 객체)의 속성을 설정한다.
+- <jsp:getProperty /> 
+   - 주어진 속성값을 가져오며 이를 문자열로 변환하고 동적인 웹페이지를 생성하는데 사용할 수 있다.
+ 
+ 
 #### 용도
 - 동적으로 파일을 삽입
 - JavaBeans 구성 요소를 재사용
 - 사용자를 다른 페이지로 이동(forward)시킬 수 있다.
 - 주로 MVC 패턴의 Model로 사용된다.
+<br>
 
-#### https://www.javatpoint.com/jsp-action-tags-forward-action 참고 
-  
 ## 스크립트 
 ```jsp
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -191,9 +206,10 @@
 </body>
 </html>
 ```
-
+<br>
 
 <hr/>
+<br>
 
 ## JavaBeans
 ```jsp
