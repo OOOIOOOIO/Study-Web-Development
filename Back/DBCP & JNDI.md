@@ -199,7 +199,7 @@ public class UserDAO { // DAO는 DB처리를 하는 공간
 }
 ```
 
-</hr>
+<hr>
 
 ### 정리를 마치며
 > &nbsp;JDBC, DBCP, JNDI 모두 DB와 연결하기 위한 기법이며 ojdbc6.jar파일이 필요하다. buildpath와 WEB-INF lib 둘 다 등록해준다. 
