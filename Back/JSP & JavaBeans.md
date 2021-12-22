@@ -20,17 +20,40 @@
 
 ## JSP의 특징
 - HTML기반 스크립트 언어이기 때문에 HTML + JAVA 기능을 그대로 사용할 수 있다.
-- Tomcat(WAS)이 이미 만들어 놓은 객체를 사용한다.
-   - request : HttpServletRequest Object 
-   - response : HttpServletResponse Object
-   - session : HttpSession Object
-   - out : PrintWriter Object
-   - application : ServletContext Object
- 
 - 사용자 정의 태그(custom tags)를 사용하여 보다 효율적으로 웹 사이트를 구성할 수 있다.
    - JSTL(JSP Standard Tag Library) 사용
 - Servlet과 다르게 JSP는 수정된 경우 재배포 할 필요 없이 WAS에서 처리해준다.
------------------------------------------
+- Tomcat(WAS)이 이미 만들어 놓은 객체를 사용한다.
+
+## JSP가 제공하는 기본 객체
+- request : javax.servlet.HttpServletRequest / HttpServletRequest Object
+   - 한번의 요청을 처리하는데 사용되는 모든 JSP페이지에서 공유될 값을 저장한다. 주로 하나의 요청을 처리하는데 사용되는 JSP페이지 사이에서 정보를 전달하기 위해 사용된다.
+- response : javax.servlet.HttpServletResponse / HttpServletResponse Object 
+   - 응답 정보를 저장한다
+- session : javax.servlet.http.HttpSession / HttpSession Object 
+   - 사용자와 관련된 정보를 JSP들이 공유하기 위해 사용된다. 사용자의 로그인 정보 등과 같은 것들을 저장한다.
+- out : javax.servlet.jsp.jspWriter / PrintWriter Object 
+   - JSP 페이지가 생성하는 결과를 출력할 때 사용되는 출력 스트림
+- application : ServletContext Object 
+   - 모든 사용자와 관련해서 공유할 정보를 저장합니다. 임시 디렉터리 경로와 같은 웹 어플리케이션의 설정 정보를 주로 저장합니다.
+- pageContext : jsp.pageContext (JSP페이지에 대한 정보를 저장합니다.)
+   - 하나의 JSP페이지 내에서 공유될 값을 저장합니다. 주로 커스텀 태그에서 새로운 변수를 추가할 때 사용된다.
+- config : Javax.servlet.ServletConfig
+   - JSP페이지에 대한 설정 정보를 저장합니다.
+- page : javax.lang.Object
+   - JSP페이지를 구현한 자바 클래스 인스턴스
+- exception : javax.lang.Throwable 
+   - 에러페이지에서만 사용 가능하다
+
+## 기본 객체의 속성
+#### pageContext, request, session, application는 속성을 갖고 있다. 속성은 각각의 기본 객체가 존재하는 동안 사용될 수 있고, JSP 페이지 사이에서 정보를 주고 받거나 공유하기 위한 목적으로 사용된다.
+
+- setAttribute(String name, Object value) : 이름이 name인 속성의 값을 value로 지정한다. return type : void
+- getAttribute(String name) : 이름이 name인 속성의 값을 구한다. 존재하지 않을 경우 null을 반환한다. return type : Object
+- removeAttribute(String name) : 이름이 name인 속성을 삭제한다. return type : void
+- getAttributeNames() : 속성의 이름 목록을 구한다.(pageContext 제외) : return type : Enumeration
+
+
 ## Script tag
 #### 개념 : Script tag를 이용해 HTML 내부(body)에 자바 코드를 넣어 프로그래밍이 가능하도록 만들 수 있다. 끝에 세미콜론(;)을 붙이지 않는다.
 - 선언문(declaration) 태그 : 자바의 변수나 메소드를 정의하는데 사용되는 태그
