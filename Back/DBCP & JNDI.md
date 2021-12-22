@@ -16,14 +16,13 @@ Connection의 객체인 conn에 연결해주어 자바 프로그램과 DB 사이
 > Application이란 JSP, Servlet, PHP 등을 말한다.
 
 ![Connection Pool](https://linked2ev.github.io/assets/img/devlog/201908/cp-s1.png)
+<br>
 
 ## DataSource
 - javax.sql.DataSource라는 인터페이스는 Connection Pool을 관리하는 목적으로 사용되며 DataSource ds 객체를 사용한다.
 - Application에서는 이 DataSource 인터페이스를 통해 Connection을 얻어오고 반납하는 등의 작업을 구현한다. 즉, Connection pool을
 어플리케이션단에서 어떻게 관리할지를 구현하는 인터페이스라고 할 수 있다.
-
-</hr>
-
+<br>
 
 ## DBCP(DataBase Connection Pool)
 - JDBC 방식은 DB에서 정보를 가져올 때마다 매번 연결을 열고 닫기 때문에 비효율적이기에 DBCP같은 Pool 방식을 일반적으로 사용한다. 
@@ -32,6 +31,7 @@ Connection의 객체인 conn에 연결해주어 자바 프로그램과 DB 사이
 - DB 커넥션 풀을 어플리케이션 소스단에 설정해 놓는 방식이다.
 
 ![DBCP와 JNDI 구성](https://t1.daumcdn.net/cfile/tistory/224CD845582D373205)
+<br>
 
 ## JNDI(Java Naming and Directory Interface)
 -	디렉터리 서비스에서 제공하는 데이터 및 객체를 발견하고 참고하기 위한 자바 API이며 외부에 있는 객체를 가져오기 위한 기술이다. 
@@ -50,8 +50,7 @@ WAS단에서 데이터베이스 커넥션 객체를 미리 네이밍 해두는 �
 2. JNDI에 등록된 DB객체 검색
 3. 찾은 객체에서 커넥션을 획득
 4. DB작업 종료 후 커넥션 반납
-
-</hr>
+<br>
 
 ## DBCP와 JNDI 설정
 1. Servers 있는 context.xml에 <Resource> </Resource>를 열어 알맞은 속성들을 등록한다.
@@ -147,7 +146,7 @@ WAS단에서 데이터베이스 커넥션 객체를 미리 네이밍 해두는 �
 </web-app>
 ```
 
-## 사용
+### 사용하기
 ```java
 package com.it.dao;
 
