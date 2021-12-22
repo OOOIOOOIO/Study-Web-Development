@@ -216,6 +216,9 @@ public class MyServlet extends HttpServlet {
   </servlet-mapping>
 </web-app>
 ```
+
+<hr>
+
 ## 정리를 마치며
 - 서블릿은 사용하기 불편해서 JSP 언어로 작성한다. JSP로 작성한 것은 다시 서블릿으로 바뀌어서 처리되기 때문에 상관없다.
 - Java Servlet 컨테이너 / 웹 서버는 일반적으로 멀티 쓰레드 환경이다. 같은 Servlet에 여러 개의 요청이 동시에 실행될 수 있기 때문
