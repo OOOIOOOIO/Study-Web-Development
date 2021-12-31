@@ -77,7 +77,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	\${10+20} : ${10+20}<br> <!-- \붙여주면 html처럼 출력된다. -->
+	\${10+20} : ${10+20}<br> <!-- \붙여주면 html처럼 출력된다.  -->
 	\${10>3} : ${10>3}<br>
 	<%
 		//String data = "hello"
