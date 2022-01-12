@@ -32,10 +32,10 @@
 
 <table>
 	<tr> 행
-		<td></td> 혹은 <th></th> 열
+		<td>1</td> 혹은 <th>2</th> 열
 	</tr>
 	<tr> 
-		<td></td> 혹은 <th></th> 열
+		<td>3</td> 혹은 <th>4</th> 열
 	</tr>
 	...
 </table>
