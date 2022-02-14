@@ -89,7 +89,7 @@ a객체는 b가 필요하다는 신호만 보내고, b객체를 주입하는 것
 <br>
 
 # Spring 환경설정
->## &nbsp;eclipse를 사용해 Spring Framework 사용
+>##&nbsp;eclipse를 사용해 Spring Framework 사용
 
 - STS(Spring Tool Suite) 설치
 
@@ -122,7 +122,93 @@ https://projectlombok.org/download에서 1.18.xx 다운로드 -> 다운받은 ja
 -> 새로 뜨는 창에서 specify ~~ 클릭 후 eclipse 경로 설정
 -> install/update 클릭 > 설치 완료된 후 eclipse 폴더 내에 lombok.jar 포함되어 있는지 확인 -> 이클립스 재시작
 ```
+
 <br>
+
+## &nbsp;프로젝트 기본 구성 요소
+
+- src/main/java : 작성되는 코드들의 경로
+- src/main/resource : 실행할 때 참고하는 기본 경로(mapper.xml, log4jdbc~, ...설정 파일들)
+- src/test/java : 테스트 코드를 넣는 경로
+- src/test/resource : 테스트 관련 설정 파일 보관 경로
+
+<br>
+
+## 웹과 관련된 스프링 설정 파일
+
+- src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml
+
+<br>
+
+## bean 관리용 스프링 설정 파일
+
+- src/main/webapp/WEB-INF/spring/root-context.xml
+
+<br>
+
+## Tomcat의 web.xml 파일
+
+- src/main/webapp/web.xml
+
+<br>
+
+## 템플릿 프로젝트의 jsp 파일 경로
+
+- src/main/webapp/WEB-INF/viws
+
+<br>
+
+## Maven이 사용하는 pom.xml
+- 프로젝트명/pom.xml
+
+``` 
+라이브러리 오류 발생시
+
+C 드라이브 -> 사용자 -> 계정폴더 -> .m2폴더 안의 내용 다 지우기 -> 이클립스 재시작 
+-> 프로젝트 우클릭 -> Maven -> Update Project
+```
+
+<br>
+
+# 스프링 프레임워크 테스트 환경(JUnit)
+> &nbsp;자바 프로그래밍 언어용 유닛 테스트 프레임워크이며 가장 많이 사용되는 테스트 환경이다. 테스트 성공시 JUnit GUI 창에 녹색으로 표시 / 실패시 적색으로 표시된다. 하나하나의 케이스별로(단위로 나누어서) 테스트를 하는 단위 테스트 도구이다.
+
+- 테스트 환경 구축하기
+   - 테스트 클래스 위쪽에 어노테이션 추가 <br>
+   &nbsp;@RunWith(SpringJUnit4ClassRunner.class) : JUnit 실행 시 <br>
+   &nbsp;@ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml") : 받아올 component가 있을 시<br>
+   &nbsp;@Log4j : 로그로 출력할 시
+   - 클래스 내부에 테스트할 메소드 선언
+   - 테스트할 메소드 위에 어노테이션 추가 <br>
+   &nbsp;@Test : Test할 메소드다~
+
+<br>
+
+# 스프링 프레임워크 동작
+>&nbsp;스프링 프레임워크가 시작되면서 먼저 스프링이 사용하는 메모리 영역을 만든다. 스프링 내부적으로 ApplicationContext라는 이름의 객체가 만들어진다. 스프링은 자신이 생성하고 관리해야 하는 객체들에 대한 설정을 알아야 하고, 이 설정파일은 root-context.xml 이라는 파일로 만들어져 있다. root-context.xml에 설정되어 있는 <context:component-scan> 태그의 내용을 통해서 컴포넌트가 존재하는 패키지를 스캔하기 시작한다.
+해당 패키지에 있는 클래스들 중에서 스프링이 사용하는 @Component라는 어노테이션이 존재하는 클래스의 인스턴스를 생성한다.
+
+
+<br>
+
+# DataBase 연결
+
+## Oracle과 연동하기
+
+```
+Build Path 추가 -> 왼쪽 메뉴에 바로 위에있는 Deployment Assembly 선택
+-> Add -> Java Build Path ~~ 선택 -> ojdbc6.jar 선택 -> Apply
+```
+
+<br>
+
+## Spring - Mybatis
+>&nbsp;SQL이 짧고 간결한 경우에는 어노테이션을 이용해서 쿼리문을 작성해준다. SQL이 복잡하거나 길어지는 경우에는 어노테이션보다 XML을 이용하는 것이 좋다. Mybatis-Spring의 경우 Mapper 인터페이스와 XML을 연동해서 동시에 이용할 수 있다. 인터페이스객체.메소드()를 사용하는 순간 해당하는 인터페이스의 경로를 namespace로 가지고 있는 xml 파일로 찾아가서 메소드명과 동일한 id의 쿼리문을 수행하여 결과로 돌려준다. <br>
+&nbsp;Mybatis는 내부적으로 JDBC의 PreparedStatement를 이용해서 SQL을 처리한다. 따라서 SQL에 전달되는 파라미터는 JDBC에서와 같이 ? 로 치환되어서 처리된다. 복잡한 SQL의 경우 ?로 나오는 값이 제대로 전달 되었는지 확인하기가 쉽지 않고 실행한 SQL의 내용을 정확히 확인하기 어렵기 때문에 log4jdbc-log4j2 라이브러리를 사용하여 어떤 값인지를 확인할 수 있다. <br>
+&nbsp;테스트 코드 실행시 많은 양의 로그가 출력되기 때문에 불편할 수 있다. 이럴 때에는 로그의 레벨을 이용해서 수정해 준다. resources/log4j.xml 파일에 있는 level 태그를 수정한다.
+
+
+
 
 
 
