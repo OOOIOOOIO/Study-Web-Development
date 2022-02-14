@@ -190,7 +190,7 @@ public class UserDAO {
 ```
 <br>
 
-## UserDTO.java : 
+## UserDTO.java 
 ```java
 package com.it.dto;
 
