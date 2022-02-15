@@ -90,7 +90,7 @@
 
 <br>
 
-## Spring MVC 구조 
+# Spring MVC 구조 
 >&nbsp;스프링 프레임워크는 하나의 기능을 위해서만 만들어진 프레임워크가 아닌 '코어'라고 할 수 있는 여러 서브 프로젝트를 결합해서 다양한 상황에 대처할 수 있도록 개발되었다. 그 중 하나가 스프링 MVC 구조이다.<br>
 >&nbsp;HttpServletRequest, HttpServletResponse를 거의 사용할 필요 없이 기능 구현이 가능하다. 다양한 타입의 파라미터 처리, 다양한 타입의 리턴 타입 사용 및 GET 방식, POST 방식 등 전송 방식에 대한 처리를 어노테이션으로 처리, 상속/인터페이스 방식 대신 어노테이션으로 설정이 가능하다.
 
@@ -98,7 +98,7 @@
 
 ![Spring MVC 프로세스 모델 - Front-Controller 패턴](https://t1.daumcdn.net/cfile/tistory/2219E449553CF49A29)
 
-### Spring MVC 주요 구성요소
+## Spring MVC 주요 구성요소
 - DispatcherServlet : 클라이언트의 요청을 전달 받는 역할. Controller에게 클라이언트의 요청을 전달하고, Controller가 리턴한 결과 값을 ViewResolver에 전달하여 알맞은 응답을 생성하도록하고 응답을 전송한다. (스프링 제공)
 - HandlerMapping : Client의 요청 URL을 어떤 Controller가 처리할 지를 결정한다. (스프링 제공)
 - Controller : Clent의 요청을 처리한 뒤, 그 결과를 DispatcherServlet에게 알려준다. (실제 로직)
