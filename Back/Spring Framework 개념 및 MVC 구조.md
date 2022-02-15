@@ -107,7 +107,7 @@
 
 <br>
 
-### Front-Controller 동작 과정
+## Front-Controller 패턴 동작 과정
 
 1. 사용자(client)의 Request는 Front-Controller인 DispatcherServlet을 통해 처리한다.
 
