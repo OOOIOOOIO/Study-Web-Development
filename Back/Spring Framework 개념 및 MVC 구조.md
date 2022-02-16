@@ -97,6 +97,14 @@
 >root-context.xml에 설정되어 있는 <context:component-scan> 태그의 내용을 통해서 컴포넌트가 존재하는 패키지를 스캔하기 시작한다.<br><br>
 >해당 패키지에 있는 클래스들 중에서 스프링이 사용하는 @Component라는 어노테이션이 존재하는 클래스의 인스턴스를 생성한다.
 
+```
+ContextLoaderListener : 요청이 들어올 때 listener로 등록한 곳이 제일 먼저 작동한다. 해당 웹 어플리케이션을 구동하게 되면 같이
+			작동이 시작되어 해당 프로젝트를 실행하면 가장 먼저 로그를 출력하면서 실행된다.
+
+ContextLoaderListener ->  contextConfiglocation - root.xml 
+-> DispatcherServelet 서블릿, 서블릿 설정 -  servlet-context ->
+```
+
 <br>
 
 # Spring MVC 구조 
