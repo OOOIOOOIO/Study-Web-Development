@@ -34,14 +34,11 @@
 <br>
 
 ## Spring-Test 어노테이션
-- @RunWith(SpringJUnit4ClassRunner.class) <br>
-&nbsp;ApplicationContext를 만들고 관리하는 작업을 할 수 있도록 JUnit의 기능을 확장해줍니다. 스프링의 핵심 기능인 컨테이너 객체를 생성해 테스트에 
-사용할 수 있도록 해준다고 보면 된다. 원래 JUnit에서는 테스트 메소드 별로 객체를 따로 생성해 관리하는 반면, Spring-Test 라이브러리로 확장된 JUnit에서는 
-컨테이너 기술을 써서 싱글톤으로 관리되는 객체를 이용해 모든 테스트에 사용한다.<br>
+- ### @RunWith(SpringJUnit4ClassRunner.class) <br>
+&nbsp;ApplicationContext를 만들고 관리하는 작업을 할 수 있도록 JUnit의 기능을 확장해줍니다. 스프링의 핵심 기능인 컨테이너 객체를 생성해 테스트에 사용할 수 있도록 해준다고 보면 된다. 원래 JUnit에서는 테스트 메소드 별로 객체를 따로 생성해 관리하는 반면, Spring-Test 라이브러리로 확장된 JUnit에서는 컨테이너 기술을 써서 싱글톤으로 관리되는 객체를 이용해 모든 테스트에 사용한다.<br>
 
-- @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml" "<--경로") <br>
-&nbsp;스프링 빈(Bean) 설정 파일의 위치를 지정하여 굳이 별도로 컨테이너를 추가하지 않고 Bean을 등록해둔 xml 파일을 지정해 컨테이너에서 사용할 수 있도록
-한다. @RunWith 어노테이션은 컨테이너를 생성하겠다는 의미인데, 어떤 파일을 참조할지 모르는 상태이기에 @ContextConfiguration("경로") 어노테이션을 함께 써주어야 한다.<br>
+- ### @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml" "<--경로") <br>
+&nbsp;스프링 빈(Bean) 설정 파일의 위치를 지정하여 굳이 별도로 컨테이너를 추가하지 않고 Bean을 등록해둔 xml 파일을 지정해 컨테이너에서 사용할 수 있도록 한다. @RunWith 어노테이션은 컨테이너를 생성하겠다는 의미인데, 어떤 파일을 참조할지 모르는 상태이기에 @ContextConfiguration("경로") 어노테이션을 함께 써주어야 한다.<br>
 
 - @Autowired <br>
 &nbsp;스프링과 마찬가지로 자동으로 의존성을 주입해준다.
