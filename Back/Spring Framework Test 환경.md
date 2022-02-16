@@ -40,10 +40,11 @@
 - ### @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml" "<--경로") <br>
 &nbsp;스프링 빈(Bean) 설정 파일의 위치를 지정하여 굳이 별도로 컨테이너를 추가하지 않고 Bean을 등록해둔 xml 파일을 지정해 컨테이너에서 사용할 수 있도록 한다. @RunWith 어노테이션은 컨테이너를 생성하겠다는 의미인데, 어떤 파일을 참조할지 모르는 상태이기에 @ContextConfiguration("경로") 어노테이션을 함께 써주어야 한다.<br>
 
-- @Autowired <br>
+- ### @Autowired <br>
 &nbsp;스프링과 마찬가지로 자동으로 의존성을 주입해준다.
 
 <br>
 
 ## 연습
+
 ![](https://user-images.githubusercontent.com/74396651/154209130-f61b5751-e9d0-460b-bed9-7dd078714c90.png)
