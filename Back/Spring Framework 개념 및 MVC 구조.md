@@ -35,7 +35,7 @@
 >예를 들어 a 객체가 b 객체 없이 동작이 불가능한 상황을 'a가 b에 의존적이다' 라고 표현한다.<br>
 >
 >&nbsp;주입(Injection)은 말 그대로 외부에서 밀어 넣는것을 의미한다. 예를 들어 a 객체가 필요로 하는 b 객체를 외부에서 밀어 넣는것을 의미한다. 
->주입을 받는 입장에서는 어떤 객체인지 신경 쓸 필요가 없고 어떤 객체에 의존하든 자신의 역할은 변하지 않게 된다.
+>&nbsp;주입을 받는 입장에서는 어떤 객체인지 신경 쓸 필요가 없고 어떤 객체에 의존하든 자신의 역할은 변하지 않게 된다.
 
 			 의존
 
@@ -74,30 +74,41 @@
 
 <br>
 
-- Spring Core : Spring Core는 일반 JAVA(POJO) 영역이며  Spring Framework의 핵심인 Bean Factory Container이다. Bean Factory는 IOC(제어의 역전)패턴을 적용하여 객체 구성부터 의존성 처리(DI)까지 모든 일을 처리하는 역할을 하고 있다.
+- ### Spring Core<br>
+   - &nbsp;Spring Core는 일반 JAVA(POJO) 영역이며  Spring Framework의 핵심인 Bean Factory Container이다. Bean Factory는 IOC(제어의 역전)패턴을 적용하여 객체 구성부터 의존성 처리(DI)까지 모든 일을 처리하는 역할을 하고 있다.
 
-- Spring Context : Spring Context는 Spring Framework의 Context 정보들을 제공하는 설정 파일이다. Spring Context에는 JNDI, EJB, Validation, Scheduiling, Internaliztaion 등 엔터프라이즈 서비스들을 포함하고 있다.
+- ### Spring Context<br>
+   - &nbsp;Spring Context는 Spring Framework의 Context 정보들을 제공하는 설정 파일이다. Spring Context에는 JNDI, EJB, Validation, Scheduiling, Internaliztaion 등 엔터프라이즈 서비스들을 포함하고 있다.
 
-- Spring AOP : Spring AOP module은 Spring Framework에서 AOP를 적용 할수 있게 도와주는 Module이다.
+- ### Spring AOP<br>
+   - &nbsp;Spring AOP module은 Spring Framework에서 AOP를 적용 할수 있게 도와주는 Module이다.
 
-- Spring DAO : DAO란 Data Access Object의 약자로 Database Data에 접근하는 객체이다. Spring JDBC DAO는 추상 레이어를 지원함으로써 코딩이나 예외처리 하는 부분을 간편화 시켜 일관된 방법으로 코드를 짤 수 있게 도와준다.
+- ### Spring DAO<br>
+   - &nbsp;DAO란 Data Access Object의 약자로 Database Data에 접근하는 객체이다. Spring JDBC DAO는 추상 레이어를 지원함으로써 코딩이나 예외처리 하는 부분을 간편화 시켜 일관된 방법으로 코드를 짤 수 있게 도와준다.
 
-- Spring ORM : ORM이란 Object relational mapping의 약자로 간단하게 객체와의 관계 설정을 하는 것을 말한다. Spring에서는 Ibatis, Hibernate, JDO 등 인기있는 객체 관계형 도구(OR도구)를 사용 할 수 있도록 지원합니다.
+- ### Spring ORM<br>
+   - &nbsp;ORM이란 Object relational mapping의 약자로 간단하게 객체와의 관계 설정을 하는 것을 말한다. Spring에서는 Ibatis, Hibernate, JDO 등 인기있는 객체 관계형 도구(OR도구)를 사용 할 수 있도록 지원합니다.
 
-- Spring Web : Spirng에서 Web context module은 Application module에 내장되어 있고 Web기반의 응용프로그램에 대한 Context를 제공하여 일반적인 Web Application 개발에 필요한 기본적인 기능 및 Jakarta Structs 와의 통합 지원을 하고 있다.
+- ### Spring Web<br>
+   - &nbsp;Spirng에서 Web context module은 Application module에 내장되어 있고 Web기반의 응용프로그램에 대한 Context를 제공하여 일반적인 Web Application 개발에 필요한 기본적인 기능 및 Jakarta Structs 와의 통합 지원을 하고 있다.
 
-- Spring MVC : Spring에서는 MVC에서는 Model 2 구조로 Apllication을 만들 수 있도록 지원한다. MVC (Model-View-Controller) 프레임 워크는 웹 응용 프로그램을 작성하기위한 완전한 기능을 갖춘 MVC를 구현합니다. MVC 프레임 워크는 전략 인터페이스를 통해 고급 구성 가능하며 JSP, Velocity, Tiles, iText 및 POI를 포함한 수많은 뷰 기술을 지원하고 있다.
+- ### Spring MVC<br>
+   - &nbsp;Spring에서는 MVC에서는 Model 2 구조로 Apllication을 만들 수 있도록 지원한다. MVC (Model-View-Controller) 프레임 워크는 웹 응용 프로그램을 작성하기위한 완전한 기능을 갖춘 MVC를 구현합니다. MVC 프레임 워크는 전략 인터페이스를 통해 고급 구성 가능하며 JSP, Velocity, Tiles, iText 및 POI를 포함한 수많은 뷰 기술을 지원하고 있다.
 
 <br>
 
 # 스프링 프레임워크 동작시 생기는 일
->스프링 프레임워크가 시작되면서 먼저 스프링이 사용하는 메모리 영역을 만든다. <br><br>
->내부적으로 ApplicationContext라는 이름의 객체가 만들어진다. <br><br>
->자신이 생성하고 관리해야 하는 객체들에 대한 설정을 알아야 하고, 이 설정파일은 root-context.xml 이라는 파일로 만들어져 있다. <br><br>
->root-context.xml에 설정되어 있는 <context:component-scan> 태그의 내용을 통해서 컴포넌트가 존재하는 패키지를 스캔하기 시작한다.<br><br>
->해당 패키지에 있는 클래스들 중에서 스프링이 사용하는 @Component라는 어노테이션이 존재하는 클래스의 인스턴스를 생성한다.
+>&nbsp;스프링 프레임워크가 시작되면서 먼저 스프링이 사용하는 메모리 영역을 만든다. <br><br>
+>&nbsp;내부적으로 ApplicationContext라는 이름의 객체가 만들어진다. <br><br>
+>&nbsp;자신이 생성하고 관리해야 하는 객체들에 대한 설정을 알아야 하고, 이 설정파일은 root-context.xml 이라는 파일로 만들어져 있다. <br><br>
+>&nbsp;root-context.xml에 설정되어 있는 <context:component-scan> 태그의 내용을 통해서 컴포넌트가 존재하는 패키지를 스캔하기 시작한다.<br><br>
+>&nbsp;해당 패키지에 있는 클래스들 중에서 스프링이 사용하는 @Component라는 어노테이션이 존재하는 클래스의 인스턴스를 생성한다.
+
+<br>
 
 ```
+<참고>
+
 ContextLoaderListener : 요청이 들어올 때 listener로 등록한 곳이 제일 먼저 작동한다. 해당 웹 어플리케이션을 구동하게 되면 같이
 			작동이 시작되어 해당 프로젝트를 실행하면 가장 먼저 로그를 출력하면서 실행된다.
 
@@ -115,12 +126,20 @@ ContextLoaderListener ->  contextConfiglocation - root.xml
 
 ![Spring MVC 프로세스 모델 - Front-Controller 패턴](https://t1.daumcdn.net/cfile/tistory/2219E449553CF49A29)
 
+<br>
+
 ## Spring MVC 주요 구성요소
-- DispatcherServlet : 클라이언트의 요청을 전달 받는 역할. Controller에게 클라이언트의 요청을 전달하고, Controller가 리턴한 결과 값을 ViewResolver에 전달하여 알맞은 응답을 생성하도록하고 응답을 전송한다. (스프링 제공)
-- HandlerMapping : Client의 요청 URL을 어떤 Controller가 처리할 지를 결정한다. (스프링 제공)
-- Controller : Clent의 요청을 처리한 뒤, 그 결과를 DispatcherServlet에게 알려준다. (실제 로직)
-- ViewResolver : Controller의 처리 결과를 생성할 View를 결정한다.
-- View : Controller의 처리 결과를 보여준다.
+
+- DispatcherServlet<br>
+   - &nbsp;클라이언트의 요청을 전달 받는 역할. Controller에게 클라이언트의 요청을 전달하고, Controller가 리턴한 결과 값을 ViewResolver에 전달하여 알맞은 응답을 생성하도록하고 응답을 전송한다. (스프링 제공)
+- HandlerMapping<br>   
+   - &nbsp;Client의 요청 URL을 어떤 Controller가 처리할 지를 결정한다. (스프링 제공)
+- Controller<br>
+   - &nbsp;Clent의 요청을 처리한 뒤, 그 결과를 DispatcherServlet에게 알려준다. (실제 로직)
+- ViewResolver<br>
+   - &nbsp;Controller의 처리 결과를 생성할 View를 결정한다.
+- View<br>
+   - &nbsp;Controller의 처리 결과를 보여준다.
 
 <br>
 
