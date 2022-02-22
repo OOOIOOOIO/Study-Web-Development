@@ -44,8 +44,11 @@
 
 - [Framework & Library](https://github.com/OOOIOOOIO/Web_development/edit/master/Back/Framework%20&%20Library.md)
 
+- [Spring Framework DB연결 및 환경설정]
+
+- [Spring Framework Mybatis]
+
 - [Spring Framework 개념 및 MVC 구조](https://github.com/OOOIOOOIO/Study_Web_development/blob/master/Back/Spring%20Framework%20%EA%B0%9C%EB%85%90%20%EB%B0%8F%20MVC%20%EA%B5%AC%EC%A1%B0.md)
-- [Spring Framework DB연결 및 환경설정] 
 
 - [Spring Framework 테스트 환경(JUnit)](https://github.com/OOOIOOOIO/Study_Web_development/blob/master/Back/Spring%20Framework%20Test%20%ED%99%98%EA%B2%BD.md)
 
