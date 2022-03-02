@@ -15,10 +15,13 @@
 
 - 이후 브라우저 열고 localhost:9090 실행 시 톰켓 배경화면 뜨면 설치 성공 
 
+<br>
+
 ---------------------------------------------------------
+<br>
 
 ## Java에서 웹버전으로 프로젝트와 파일 생성 방법 및 서버 연결
-- perpective : JAVA EE(Wevb 개발)로 설정
+- perspective : JAVA EE(Wevb 개발)로 설정
 
 - 서버 연결 
    - Window --> Show View --> Servers 클릭 --> 아파치파일 --> 톰캣 9.0 --> NEXT 
@@ -43,8 +46,11 @@
 - 인코딩 설정 
     - Window tab --> Preferences -- enc 검색 --> Workspace, CSS, HTML, JSP, XML 각각 Apply 해줘야 된다.)
 
+<br>
 
 -----------------------------------------
+
+<br>
 
 ## 프로젝트 emport & import
 - 웹버전 프로젝트 베포하는 법
@@ -52,3 +58,6 @@
 
 - 웹버전 프로젝트 받는 법
    - import --> WAR file
+
+
+
