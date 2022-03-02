@@ -1,8 +1,9 @@
-# HTTP
+# https://im-developer.tistory.com/166
+
+# HTTP(HyperText Transfer Protocol)
 
 <img src="https://mdn.mozillademos.org/files/13673/HTTP%20&%20layers.png" style="width:700px; "/>
 
-## HTTP(HyperText Transfer Protocol)
 - &nbsp;초기에는 HTML과 같은 하이퍼미디어 문서를 주로 전송했지만, 최근에는 Plain text, JSON, XML 등 다양한 형태의 정보도 전송하는 애플리케이션 레이어 프로토콜이다.
 
 - &nbsp;일반적으로 안정적인 TCP/IP 레이어를 기반으로 사용하는 응용 프로토콜이다.
@@ -38,31 +39,74 @@
 
 <br>
 
-### 메서드(Method)
+### HTTP 메서드(Method)
 
 ![](https://user-images.githubusercontent.com/4013025/48322141-cf7af680-e604-11e8-8a76-ae4d92a83793.png)
 
 ![](https://static.packt-cdn.com/products/9781838983994/graphics/image/C15309_01_02.jpg)
+
+<br>
+
+#### 종류
+
 - GET
-   - 특정 리소스를 받기 위한 요청이다. 따라서 리소스의 생성, 수정 및 삭제 등에 사용해서는 안된다. 
+   - 주로 데이터를 읽거나(Read) 검색(Retrieve)할 때에 사용되는 메소드이다. 만약  GET 요청이 성공적으로 이루어진다면 XML이나 JSON과 함께
+   200 HTTP 응답 코드를 리턴한다. 에러가 발생하면 주로 404(Not found) error 혹은 400(Bad request) 에러가 발생한다.
+   - HTTP 명서에 의하면 GET 요청은 오로지 데이터를 읽을 때에만 사용된다. 수정, 삭제와 같은 데이터를 조작하는 연산에 사용하면 안된다
+   - GET Method는 idempotent하다
+```
+ex) url
+
+GET /polite/1998
+```
 
 - POST
-   - 리소스를 생성하거나 컨트롤러를 실행하는 데 사용한다.
+   - 주로 새로운 리소스를 생성(Create)할 때 사용된다. 조금 더 구체적으로 POST는 하위 리소스들을 생성하는데 사용된다. 성공적으로 Creation을 
+   완료하면 201(Created) HTTP 응답을 반환한다.
+   - Post Method는 idempotent하지 않다.
+```
+ex) json 형식
+
+POST /polite
+body : {name : "SeongHo Kim"}
+Content-Type : "application/json"
+
+```
 
 - PUT
    - 변경 가능한 리소스를 업데이트하는 데 사용되며 항상 리소스의 식별 정보를 포함해야 한다.
+   - Put Method는 idempotent하다.
+```
+ex) json 형식
 
-- PATCH
-   -  변경 가능한 리소스의 부분 업데이트에 사용되며 항상 리소스 식별 정보를 포함해야 한다.(잘 사용하지 않는다. PUT을 사용해 전체 객체를 업데이트하는 것이 관례라고 한다.)
+PUT /polite
+body : {name : "SEONGHO KIM"}
+Content-Type : "application/json"
+```
+
 
 - DELETE
    - 특정 리소스를 제거하는 데 사용한다.(일반적으로 Request body가 아닌 URI경로에 제거하려는 리소스의 ID를 전달한다.)
+   - 데이터를 삭제하는 것이기 때문에 요청 시 Body와 Content-Type이 비워져 있다.
+```
+ex) url
+
+DELETE /polite/1998
+```
+
+- PATCH
+   -  변경 가능한 리소스의 부분 업데이트에 사용되며 항상 리소스 식별 정보를 포함해야 한다.(잘 사용하지 않는다. PUT을 사용해 전체 객체를 업데이트하는 것이 관례라고 한다.)
 
 - HEAD
    - 클라이언트가 본문 없이 리소스에 대한 헤더만 검색하는 경우 사용한다.(일반적으로 클라이언트가 서버에 리소스가 있는지 확인하거나 메타 데이터를 읽으려는 때만 GET 대신 사용한다.)
 
 - OPTIONS
    - 클라이언트가 서버의 리소스에 대해 수행 가능한 동작을 알아보기 위해 사용한다.(일반적으로 서버는 이 리소스에 대해 사용할 수 있는 HTTP 요청 메서드를 포함하는 Allow 헤더를 반환한다. CORS에 사용한다고 한다.)
+
+- RFC
+
+- Idempotent : 멱등성
+   - 여러번 수행핻 같은 결과를 도출한다는 뜻. 호출로 인해 데이터의 변형이 없다는 뜻이다. 
 
 <br>
 
