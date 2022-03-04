@@ -34,7 +34,7 @@
 
 ## Network
 
-- [HTTP](https://github.com/OOOIOOOIO/Study_Web_development/blob/master/Network/HTTP%EB%9E%80.md)
+- [HTTP 개념 및 요청과 응답](https://github.com/OOOIOOOIO/Study_Web_development/blob/master/Network/HTTP%20%EA%B0%9C%EB%85%90%20%EB%B0%8F%20%EC%9A%94%EC%B2%AD%EA%B3%BC%20%EC%9D%91%EB%8B%B5.md)
 
 - [IP]
 
