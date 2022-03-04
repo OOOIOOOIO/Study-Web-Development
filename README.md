@@ -26,15 +26,15 @@
 
 <hr>
 
-## 서버
+## Server
 
 - [Web Server, Web Container, WAS](https://github.com/OOOIOOOIO/Web_development/blob/master/Web%20basic/Web%20Server%20%2C%20Web%20Container%20%2C%20WAS.md)
 
 <hr>
 
-## 네트워크
+## Network
 
-- [HTTP](https://github.com/OOOIOOOIO/Web_development/blob/master/Web%20basic/HTTP%EB%9E%80.md) 
+- [HTTP](https://github.com/OOOIOOOIO/Study_Web_development/blob/master/Network/HTTP%EB%9E%80.md)
 
 - [IP]
 
