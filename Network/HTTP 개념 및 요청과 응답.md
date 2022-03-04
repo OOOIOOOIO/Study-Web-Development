@@ -1,8 +1,10 @@
-# https://im-developer.tistory.com/166
-
 # HTTP(HyperText Transfer Protocol)
 
+<br>
+
 <img src="https://mdn.mozillademos.org/files/13673/HTTP%20&%20layers.png" style="width:700px; "/>
+
+<br>
 
 - &nbsp;초기에는 HTML과 같은 하이퍼미디어 문서를 주로 전송했지만, 최근에는 Plain text, JSON, XML 등 다양한 형태의 정보도 전송하는 애플리케이션 레이어 프로토콜이다.
 
@@ -58,6 +60,7 @@
 ex) url
 
 GET /polite/1998
+
 ```
 
 - POST
@@ -82,6 +85,7 @@ ex) json 형식
 PUT /polite
 body : {name : "SEONGHO KIM"}
 Content-Type : "application/json"
+
 ```
 
 
@@ -92,6 +96,7 @@ Content-Type : "application/json"
 ex) url
 
 DELETE /polite/1998
+
 ```
 
 - PATCH
