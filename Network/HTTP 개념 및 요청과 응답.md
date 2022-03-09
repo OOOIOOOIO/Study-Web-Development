@@ -41,11 +41,18 @@
 
 <br>
 
+
 ### HTTP 메서드(Method)
 
 ![](https://user-images.githubusercontent.com/4013025/48322141-cf7af680-e604-11e8-8a76-ae4d92a83793.png)
 
 ![](https://static.packt-cdn.com/products/9781838983994/graphics/image/C15309_01_02.jpg)
+
+<br>
+
+
+#### 일반적으로 웹에서 REST API를 작성할 때 HTTP Methods를 이용해 CRUD를 표현한다. REST API, REST 방식은 따로 정리하겠다.
+[REST 정리](https://github.com/OOOIOOOIO/Study_Web_development/blob/master/Network/REST.md)
 
 <br>
 
@@ -84,7 +91,7 @@ ex) json 형식
 
 PUT /polite
 body : {name : "SEONGHO KIM"}
-Content-Type : "application/json"
+Content-Type : "application/json" // 없어도 됨
 
 ```
 
@@ -119,9 +126,41 @@ DELETE /polite/1998
 
 <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FCmjnf%2FbtqWTYTN3X1%2F34p8xLsQtEIk0xMzyjIw8k%2Fimg.png">
 
-- 200과 201은 성공적으로 요청과 응답되었다는 뜻이다.
+### 1XX : Information responses
+>&nbsp;상태코드가 "1"로 시작하는 경우는 서버가 요청을 받았으며, 서버에 연결된 클라이언트는 작업을 계속 진행하라는 의미이다. 해당 코드는 HTTP 1.0에서 지원되지 않는다.
 
-- 마찬가지로 응답에도 본문이 존재한다. 요청에 대한 데이터가 담겨있으며 브라우저는 응답 메세지에 담겨있는 HTML을 받아 화면에 렌더링을 한다.
+- 100 : continue
+   - 작업이 진행 중임을 나타내는 응답코드이다. 현재까지의 진행상태에 문제가 없으며, 클라이언트가 계속해서 요청을 하거나 이미 요청을 완료한 경우 무시하라는 것을 의미한다.
+
+- 101 : Switching Protocol
+   - 클라이언트에 의해 보내진 업그레이드 요청 헤더에 대한 응답으로 보내진다. 서버에서 프로토콜을 변경할 것임을 알려줌 해당 코드는 Websocket 프로토콜 전환 시에 사용된다.
+
+- 102 : Processing(WebDAV)
+   - 서버가 요청을 수신하였으며 이를 처리하고 있지만, 아직 제대로 된 응답을 알려줄 수 없음을 나타낸다.
+   
+### 2XX : Successful responses
+- 200 : OK
+   - 요청이 성공적으로 되었으며 요청에 따른 응답을 해준다.
+
+- 201 : Created
+   - 요청이 성공적으로 되었으며, 그 결과로 새로운 리소스가 생성되었다는 뜻이다. 일반적으로 POST or PUT 메소드 이후에 따라온다.
+
+- 203 : Non-Authoritative Information
+- 204 : No Content
+- 205 : Reset Content
+- 206 : Partial Content
+- 207 : Multi-Status
+- 208 : Already Reported
+- 226 : IM Used
+
+### 3XX : Redirection messages
+
+### 4XX : Client error responses
+
+### 5XX : Server error responses
+
+
+>&nbsp;마찬가지로 응답에도 본문(body)이 존재한다. 요청에 대한 데이터가 담겨있으며 브라우저는 응답 메세지에 담겨있는 HTML을 받아 화면에 렌더링을 한다.
 
 
 
