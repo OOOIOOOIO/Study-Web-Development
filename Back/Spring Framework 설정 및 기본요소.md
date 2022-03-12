@@ -1,9 +1,9 @@
 # Spring Framework 설정 및 기본요소
-> ## &nbsp;eclipse를 사용해 Spring Framework 사용
+## &nbsp;eclipse를 사용해 Spring Framework 사용
 
 <br>
 
-- STS(Spring Tool Suite) 설치
+## STS(Spring Tool Suite) 설치
 
 ```
 	eclipse 플러그인으로 사용
@@ -15,26 +15,26 @@
 
 <br>
 
-- 프로젝트 생성(Maven)
+## 프로젝트 생성(Maven 사용)
 
->Maven은 프로젝트 관리 도구의 일종이다. Maven은 필요한 라이브러리를 특정 문서(pom.xml)에 정의해 놓으면 내가 사용할 라이브러리 뿐만 아니라 해당 라이브러리가 작동하는데에 필요한 다른 라이브러리들 까지 관리하여 네트워크를 통해서 자동으로 다운받아 준다.<br>
+>&nbsp;Maven은 프로젝트 관리 도구의 일종이다. Maven은 필요한 라이브러리를 특정 문서(pom.xml)에 정의해 놓으면 내가 사용할 라이브러리 뿐만 아니라 해당 라이브러리가 작동하는데에 필요한 다른 라이브러리들 까지 관리하여 네트워크를 통해서 자동으로 다운받아 준다.<br>
 > 
 >&nbsp;pom.xml : 필요한 라이브러리들을 설치, 등록하는 곳. Building이 되면서 다운된다. (이클립스 빌드패스에서 라이브러리 추가하는것 처럼 여기서 추가하는 것이다.)
 
 <br>
 
-- Lombok 라이브러리 설치
+## Lombok 라이브러리 설치
 
 >&nbsp;이클립스와 스프링 플러그인 만으로도 스프링 개발이 가능하지만, Lombok(롬복)을 이용하면 Java 개발시 getter/setter, toString(), 생성자 등을 자동으로 생성해주므로 설치해서 사용하면 편리하다.<br>
 >&nbsp;pom.xml에 등록도 해야하고 따로 응용프로그램을 설치해야한다.
 
-<code>
+```
 	https://projectlombok.org/download에서 1.18.xx 다운로드 -> 다운받은 jar파일이
 		1.java 아이콘 모양 : 더블클릭
 		2.알집모양 : cmd 켜서 명령어로 : java -jar 파일경로\lombok.jar
 	-> 새로 뜨는 창에서 specify ~~ 클릭 후 eclipse 경로 설정
 	-> install/update 클릭 > 설치 완료된 후 eclipse 폴더 내에 lombok.jar 포함되어 있는지 확인 -> 이클립스 재시작
-</code>
+```
 
 <br>
 
