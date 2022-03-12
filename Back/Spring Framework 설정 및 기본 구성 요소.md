@@ -1,4 +1,4 @@
-# Spring Framework 설정 및 기본요소
+# Spring Framework 설정 및 기본 구성 요소
 
 <br>
 
