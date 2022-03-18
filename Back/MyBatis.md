@@ -5,7 +5,23 @@
 JDBC를 통해 데이터베이스에 엑세스 하는 작업을 갭슐화하고 일반 SQL 쿼리 저장, 프로시저 및 고급 맵핑을 지원하며
 모든 JDBC 코드 및 매개 변수의 중복작업을 제거한다. MyBatis에서는 프로그램에 있는 SQL쿼리들을 한 구성파일에 구성하여
 프로그램 코드와 SQL을 분리할 수 있는 장점을 가지고 있다.<br>
-&nbsp;기존 JDBC 방식과 달리 SQL문을 XML 파일에 작성함으로써 코드가 줄어들고 SQL문 수정이 편해지며 DBCP 기법을 사용하여 커넥션을 여러개 생성하기 때문에 JDBC만 사용하는 것보다 작업 효율과 가독성이 좋아진다.
+>&nbsp;기존 JDBC 방식과 달리 SQL문을 XML 파일에 작성함으로써 코드가 줄어들고 SQL문 수정이 편해지며 DBCP 기법을 사용하여 커넥션을 여러개 생성하기 때문에 JDBC만 사용하는 것보다 작업 효율과 가독성이 좋아진다.<br>
+>&nbsp; 참고로 iBatis는 2.5 버전이며 JD K1.4 버전 이상, MyBatis는 3.0 버전이며 JDK 1.5버전 이상을 지원하며 둘의 차이점은 몇 개의 문법 및 명칭, 단어의 변경 등이다.
+
+<br>
+
+## MyBatis 설치 및 사용
+
+```
+
+설치법!
+	blog.mybatis.org --> products --> 3.5.7 zip파일 다운
+
+사용법!
+	https://mybatis.org/mybatis-3/ko/getting-started.html
+
+```
+
 <br>
 
 ## MyBatis 특징
@@ -14,21 +30,40 @@ JDBC를 통해 데이터베이스에 엑세스 하는 작업을 갭슐화하고 
 - resultType, resultClass 등 VO를 사용하지 않고 조회 결과를 사용자 정의 DTO, MAP 등으로 맵핑하여 사용할 수 있다.
 - 빠른 개발이 가능하여 생산성이 향상된다.
 - 다양한 프로그램잉 언어로 구현이 가능하다. ex)Java, C#, .NET, Ruby
+
 <br>
 
 ## MyBatis 구조
 
 ![MyBatis Database Access 구조](https://images.velog.io/images/changyeonyoo/post/5678a014-ef59-4b22-985c-885f5d81b246/999CFA505BBB65D32C.jpg)
+
 <br>
 
 ## MyBatis 데이터 액세스 계층
 ![MyBatis Database Access 구조](https://images.velog.io/images/changyeonyoo/post/bce0a67f-0493-433f-a728-53cee12c5e51/99BE40445C5D2C5719.png)
+
 <br>
 
 ## MyBatis 실행해보기
 - 코드를 작성하기 전 Build Path와 WEB-INF -> lib파일에 mybatis.jar와 ojdbc6.jar를 등록해주어야 한다.
 
-## config.xml : MyBatis 설정 파일
+<br>
+
+## 필수 xml 파일 경로
+- src/com/it/mybatis/config.xml
+- src/com/it/mybatis/SqlMapConfig.xml
+- src/com/it/mapper/user.xml
+- src/com/it/dao/UserDAO.java
+- src/com/it/dto/UserDTO.java
+
+<br>
+
+## config.xml : MyBatis DB설정 파일
+- 경로
+   - src/com/sh/mybatis/config.xml
+
+<br>
+
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?> 
 <!-- config : 설계도 , mybatis 홈페이지에서 복붙해옴. -->
@@ -56,6 +91,7 @@ JDBC를 통해 데이터베이스에 엑세스 하는 작업을 갭슐화하고 
 </configuration>
 
 ```
+
 <br>
 
 ## SqlMapConfig.java : config.xml을 이용해 DB와 연결
@@ -101,6 +137,7 @@ public class SqlMapConfig {
 }
 
 ```
+
 <br>
 
 ## user.xml : Mapper 파일로서 SQL 작성
@@ -135,6 +172,7 @@ public class SqlMapConfig {
 </mapper>
 
 ```
+
 <br>
 
 ## UserDAO.java : 연결된 DB를 통해 실제로 데이터 
@@ -188,6 +226,7 @@ public class UserDAO {
 }
 
 ```
+
 <br>
 
 ## UserDTO.java 
@@ -275,6 +314,7 @@ public class UserDTO {
 }
 
 ```
+
 <br>
 
 <hr>
