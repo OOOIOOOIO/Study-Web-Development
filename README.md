@@ -25,7 +25,7 @@
 
 - [호스팅이란]
 
-- [Framework & Library](https://github.com/OOOIOOOIO/Web_development/edit/master/Back/Framework%20&%20Library.md)
+- [Framework & Library](https://github.com/OOOIOOOIO/Study_Web_development/blob/master/Web%20basic/Framework%20&%20Library.md)
 
 - [MVC Model 1]
 
