@@ -94,19 +94,20 @@ WAS단에서 데이터베이스 커넥션 객체를 미리 네이밍 해두는 �
     	<Resource></Resource>는 우린 이런 자원이 필요해 시작되면 만들어줘라는 뜻이다.
     	
     	< 이 전체가 JNDI >
+	
 		<DBCP 관련>
-		name 	: dbcp를 이용하기 위한 key값
-		type 	: 해당 Resource의 return type이다.
-		maxActive : 연결 최대 혀용 개수
-		maxIdle : 항상 연결상태를 유지하는 개수 (보편적으로 maxActive와 maxIdle의 개수는 같게 해준다.)
-		maxWait : 커넥션 풀에 연결 가능한 커넥션이 없을 경우 대기하는 시간(정해주지 않으면 응답 올 때까지 대기, -1은 바로 실패)
+			name 	: dbcp를 이용하기 위한 key값
+			type 	: 해당 Resource의 return type이다.
+			maxActive : 연결 최대 혀용 개수
+			maxIdle : 항상 연결상태를 유지하는 개수 (보편적으로 maxActive와 maxIdle의 개수는 같게 해준다.)
+			maxWait : 커넥션 풀에 연결 가능한 커넥션이 없을 경우 대기하는 시간(정해주지 않으면 응답 올 때까지 대기, -1은 바로 실패)
 
 		<JDBC 관련>
-		driverClassName
-		url
-		username
-		password
-    
+			driverClassName
+			url
+			username
+			password
+
 ```
 
 ```xml
