@@ -1,7 +1,11 @@
 # DBCP & JNDI
-> &nbsp;JDBC, DBCP, JNDI 모두 JAVA에서 DB와 커넥션을 하기 위해 사용하는 방법이다. 그리고 모두 ojdbc6.jar파일이 필요하다.
- DBCP와 JNDI에 대해 설명하기 전에 Connection과 Connection pool 그리고 Datasource에 대해 먼저 알아보자.
+> &nbsp;JDBC, DBCP, JNDI 모두 JAVA에서 DB와 커넥션을 하기 위해 사용하는 방법이다. 그리고 모두 ojdbc6.jar파일이 필요하다.<br>
+> &nbsp;DBCP와 JNDI에 대해 설명하기 전에 Connection과 Connection pool 그리고 Datasource에 대해 먼저 알아보자.
+
+<br>
+
  [JDBC 사용법](https://github.com/OOOIOOOIO/Database_JDBC)
+ 
 <br>
 
 ## Connection과 Connection pool
@@ -15,13 +19,17 @@ Connection의 객체인 conn에 연결해주어 자바 프로그램과 DB 사이
 필요한 어플리케이션에 전달하여 이용하는 방법이다.<br>
 > Application이란 JSP, Servlet, PHP 등을 말한다.
 
+<br>
+
 ![Connection Pool](https://linked2ev.github.io/assets/img/devlog/201908/cp-s1.png)
+
 <br>
 
 ## DataSource
 - javax.sql.DataSource라는 인터페이스는 Connection Pool을 관리하는 목적으로 사용되며 DataSource ds 객체를 사용한다.
 - Application에서는 이 DataSource 인터페이스를 통해 Connection을 얻어오고 반납하는 등의 작업을 구현한다. 즉, Connection pool을
 어플리케이션단에서 어떻게 관리할지를 구현하는 인터페이스라고 할 수 있다.
+
 <br>
 
 ## DBCP(DataBase Connection Pool)
@@ -30,12 +38,17 @@ Connection의 객체인 conn에 연결해주어 자바 프로그램과 DB 사이
 -	따라서 미리 Connection을 만들어 두고 필요시 저장된 공간에서 가져다 쓰고 반납하는 기법이다.
 - DB 커넥션 풀을 어플리케이션 소스단에 설정해 놓는 방식이다.
 
+<br>
+
 ![DBCP와 JNDI 구성](https://t1.daumcdn.net/cfile/tistory/224CD845582D373205)
+
 <br>
 
 ## JNDI(Java Naming and Directory Interface)
 -	디렉터리 서비스에서 제공하는 데이터 및 객체를 발견하고 참고하기 위한 자바 API이며 외부에 있는 객체를 가져오기 위한 기술이다. 
 WAS단에서 데이터베이스 커넥션 객체를 미리 네이밍 해두는 방식이다.
+
+<br>
 
 ### 특징
 - DB 커넥션을 WAS 단에서 제어하면서 서버에서는 하나의 Connection Pool을 가지며 이를 공유객체를 사용한다고 생각할 수 있다.
@@ -44,20 +57,58 @@ WAS단에서 데이터베이스 커넥션 객체를 미리 네이밍 해두는 �
    - DB Connection Pool을 효율적으로 사용할 수 있다. WAS 단에서 DB Pool을 하나로 관리하면 스태틱 객체를 생성해
     쉽게 가져다 쓸 수 있기 때문에 효율이 좋아진다고 한다.
 
+<br>
 
 ### 동작과정 
 1. 사용자 요청
 2. JNDI에 등록된 DB객체 검색
 3. 찾은 객체에서 커넥션을 획득
 4. DB작업 종료 후 커넥션 반납
+
 <br>
 
 ## DBCP와 JNDI 설정
-1. Servers 있는 context.xml에 <Resource> </Resource>를 열어 알맞은 속성들을 등록한다.
-2. context.xml 파일을 복사해 META-INF에 붙여넣는다.
+1. Servers 프로젝트에 있는 context.xml에 <Resource> </Resource>를 열어 알맞은 속성들을 등록한다.
+2. Servers에 있는 context.xml 파일을 복사해 META-INF에 context.xml 파일을 복사해 넣어놓는다.
 3. WEB-INF 안에 있는web.xml 파일에 <resource-ref> </resource-ref>안에 contet.xml에 맞춰 등록해준다.
 
+<br>
+
+## 필수 xml 파일 경로
+- Servers/Tomcat v9.0 Server at localhost-config/context.xml
+- WebContent/META-INF/context.xml
+- WebContent/WEB-INF/lib/web.xml
+- src/com/it/dao/UserDAO.java
+- src/com/it/dto/UserDTO.java
+
+<br>
+
 ### context.xml
+
+#### context.xml의 설명
+
+```
+
+	 서버가 시작 되면서 context.xml에 들려 참고해 만들 객체가 있는지 찾는다.
+	 
+    	<Resource></Resource>는 우린 이런 자원이 필요해 시작되면 만들어줘라는 뜻이다.
+    	
+    	< 이 전체가 JNDI >
+		<DBCP 관련>
+		name 	: dbcp를 이용하기 위한 key값
+		type 	: 해당 Resource의 return type이다.
+		maxActive : 연결 최대 혀용 개수
+		maxIdle : 항상 연결상태를 유지하는 개수 (보편적으로 maxActive와 maxIdle의 개수는 같게 해준다.)
+		maxWait : 커넥션 풀에 연결 가능한 커넥션이 없을 경우 대기하는 시간(정해주지 않으면 응답 올 때까지 대기, -1은 바로 실패)
+
+		<JDBC 관련>
+		driverClassName
+		url
+		username
+		password
+    
+```
+
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
@@ -120,7 +171,10 @@ WAS단에서 데이터베이스 커넥션 객체를 미리 네이밍 해두는 �
 </Context>
 ```
 
+<br>
+
 ### web.xml
+
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
@@ -146,7 +200,10 @@ WAS단에서 데이터베이스 커넥션 객체를 미리 네이밍 해두는 �
 </web-app>
 ```
 
+<br>
+
 ### 사용하기
+
 ```java
 package com.it.dao;
 
@@ -198,6 +255,8 @@ public class UserDAO { // DAO는 DB처리를 하는 공간
 	}
 }
 ```
+
+<br>
 
 <hr>
 
