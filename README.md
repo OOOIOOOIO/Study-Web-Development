@@ -1,4 +1,4 @@
-# Study_Web_development
+# Study Web Development
 
 
 ##  환경 설정
@@ -20,8 +20,6 @@
 - [웹 표준(Web Standard)과 웹 호환성](https://github.com/OOOIOOOIO/Web_development/blob/master/Web%20basic/%EC%9B%B9%20%ED%91%9C%EC%A4%80(Web%20Standard).md)
 
 - [인터넷의 작동원리]
-
-- [DNS와 그 작동 원리]
 
 - [호스팅이란]
 
@@ -90,22 +88,6 @@
 
 - [AWS]
 
-
-<hr>
-
-## Network
-
-- [HTTP 개념 및 요청과 응답](https://github.com/OOOIOOOIO/Study_Web_development/blob/master/Network/HTTP%20%EA%B0%9C%EB%85%90%20%EB%B0%8F%20%EC%9A%94%EC%B2%AD%EA%B3%BC%20%EC%9D%91%EB%8B%B5.md)
-
-- [IP]
-
-- [TCP]
-
-- [UDP]
-
-- []
-
-- [Proxy란](https://github.com/OOOIOOOIO/Study_Web_development/blob/master/Network/Proxy%EB%9E%80.md)
 
 
 
