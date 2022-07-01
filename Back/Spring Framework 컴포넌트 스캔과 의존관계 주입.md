@@ -152,11 +152,50 @@ public class AutoAppConfig {;}
 - Configuration을 통해 스프링 컨테이너를 생성하고
 - ComponentScan을 통해 @Component 어노테이션이 붙은 클래스를 스프링 빈으로 등록한다.
 - excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = Configuration.class)를 통해 스캔을 할 때 제외할 요소를 설정할 수 있다.
+- includeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = MyIncludeComponent.class)를 통해 스캔을 할 때 포함할 요소를 설정할 수 있다.
 - basePackages = "com.core"를 통해 스캔을 어디서부터 시작할 건지 설정할 수 있다. 만약 설정하지 않았다면 @ComponentScan이 등록된 클래스가 있는 패키지가 시작 패키지이다.
    - 가능하면 설저 정보 클래스의 위치를 프로젝트의 최상단에 둘 것을 추천한다. 최근 스프링 부트도 이를 기본으로 제공한다.
 
 
-	
+<br>
+<hr>
+<br>
 
+## ComponentScan 테스트 : Junit5
+```java
+package com.core.scan;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import com.core.AutoAppConfig;
+import com.core.member.MemberService;
+
+
+public class AutoAppConfigTest {
+
+	@Test
+	public void basicScan() {
+		
+		// Spring Container 생성
+		AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(AutoAppConfig.class);
+		
+		// Spring Bean 꺼내오기
+		MemberService memberService = ac.getBean(MemberService.class);
+		
+		assertThat(memberService).isInstanceOf(MemberService.class);
+		
+	}
+}
+
+```
+
+	
+## 참고
+- 만약 자동 빈 등록(@Component)와 수동 빈 등록이 충돌이 일어날 경우 수동 빈이 자동 빈을 오버라이딩한다.(수동 빈이 등록된다!)
+- 만약 같은 이름의 빈이 여러개 등록되어 충돌이 일어날 경우 onflictingBeanDefinitionException 예외가 발생한다!!! 조심하장
 
 	
