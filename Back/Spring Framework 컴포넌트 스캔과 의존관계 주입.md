@@ -193,9 +193,188 @@ public class AutoAppConfigTest {
 
 ```
 
+<br>
+<hr>
+<br>
 	
+## 조회한 빈이 모두 필요한 경우 Map, List 사용
+```java
+public class AllBeanTest {
+
+	
+	@Test
+	public void findAllBean() {
+		ApplicationContext ac = new AnnotationConfigApplicationContext(AutoAppConfig.class, DiscountService.class);
+		DiscountService discountService = ac.getBean(DiscountService.class);
+		
+		Member member = new Member(1L, "userA", Grade.VIP);
+		
+		int discountPrice = discountService.discount(member, 10000, "fixDiscountPolicy");
+		
+		assertThat(discountService).isInstanceOf(DiscountService.class);
+		assertThat(discountPrice).isEqualTo(1000);
+		
+		int rateDiscountPrice = discountService.discount(member, 20000, "rateDiscountPolicy");
+		assertThat(rateDiscountPrice).isEqualTo(2000);
+	}
+	
+	
+	static class DiscountService{
+		
+		private final Map<String, DiscountPolicy> policyMap;
+		private final java.util.List<DiscountPolicy> policies;
+		
+		// 알아서 Map과 List에 주입시켜준다. 생성자가 1개만 있기 때문에 @Autowired 생략 가능!
+		public DiscountService(Map<String, DiscountPolicy> policyMap, List<DiscountPolicy> policies) {
+			this.policyMap = policyMap;
+			this.policies = policies;
+			System.out.println("policyMap : " + policyMap);
+			System.out.println("policies : " + policies);
+			
+		}
+		
+		
+		 public int discount(Member member, int price, String discountCode) {
+			 DiscountPolicy discountPolicy = policyMap.get(discountCode);
+			 
+			 System.out.println("discountCode = " + discountCode);
+			 System.out.println("discountPolicy = " + discountPolicy);
+			 
+			 return discountPolicy.discount(member, price);
+		 }
+		
+	}
+}	
+```
+
+<br>
+<hr>
+<br>
+
+## 옵션처리(null 처리)
+
+```java
+package com.core.autowired;
+
+import java.util.Optional;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.lang.Nullable;
+
+import com.core.AppConfig;
+import com.core.member.Member;
+
+/*
+ * 
+ *
+	옵션 처리
+	
+ 주입할 스프링 빈이 없어도 동작해야 할 때가 있다.
+그런데 @Autowired 만 사용하면 required 옵션의 기본값이 true 로 되어 있어서 자동 주입 대상이 없으면 오류가 발생한다.
+자동 주입 대상을 옵션으로 처리하는 방법은 다음과 같다.
+	
+@Autowired(required=false) : 자동 주입할 대상이 없으면 수정자 메서드 자체가 호출 안됨
+org.springframework.lang.@Nullable : 자동 주입할 대상이 없으면 null이 입력된다.
+Optional<> : 자동 주입할 대상이 없으면 Optional.empty 가 입력된다
+	
+ */
+
+public class AutowiredTest {
+	
+	@Test
+	public void AutowiredOption() {
+		ApplicationContext ac = new AnnotationConfigApplicationContext(TestBean.class); // 컴포넌트스캔하는 것 처럼 @Configuration이 없어도 TestBean을 스프링 빈으로 인식한다.
+		
+
+	}
+	
+	
+	static class TestBean{
+		// 1 : @Autowired(required = false) / true가 기본값
+		@Autowired(required = false)
+		public void setNoBean1(Member noBean1) {
+			System.out.println("noBean1 : " + noBean1);
+		}
+		
+		// 2 : @Nullable
+		@Autowired
+		public void setNoBean2(@Nullable Member noBean2) {
+			System.out.println("noBean2 : " + noBean2);
+		}
+		
+		// 3 : Optional<Member>
+		@Autowired
+		public void setNoBean3(Optional<Member> noBean3) {
+			System.out.println("noBean3 : " + noBean3);
+		}
+		
+		
+	}
+	
+}
+
+```
+- 주입할 스프링 빈이 없어도 동작해야 할 때가 있다.
+- 그런데 @Autowired 만 사용하면 required 옵션의 기본값이 true 로 되어 있어서 자동 주입 대상이 없으면 오류가 발생한다.
+- 자동 주입 대상을 옵션으로 처리하는 방법은 다음과 같다.
+   - @Autowired(required=false) : 자동 주입할 대상이 없으면 수정자 메서드 자체가 호출 안됨
+   - org.springframework.lang.@Nullable : 자동 주입할 대상이 없으면 null이 입력된다.
+   - Optional<> : 자동 주입할 대상이 없으면 Optional.empty 가 입력된다
+	
+<br>
+<hr>
+<br>
+
 ## 참고
 - 만약 자동 빈 등록(@Component)와 수동 빈 등록이 충돌이 일어날 경우 수동 빈이 자동 빈을 오버라이딩한다.(수동 빈이 등록된다!)
 - 만약 같은 이름의 빈이 여러개 등록되어 충돌이 일어날 경우 onflictingBeanDefinitionException 예외가 발생한다!!! 조심하장
+- @Autowired는 타입 매칭이다. 타입 매칭의 결과가 2개 이상일 때 필드 명, 파라미터 명으로 빈 이름을 매칭한다.
+- @Autowired를 통해 주입할 경우 타입이 같은 여러개의 스프링 빈이 매칭될 때 이렇게 해결할 수 있다.
+   - @Autowired 필드 명 매칭 -> 필드 명을 사용할 구현체 명으로 설정하는 법
+   - @Qualifier 사용 -> 컴포넌트(빈)마다 추가 구분자를 붙여주는 방법이다. 
+	```java
+	// @Qualifier 사용 법
+	@Component
+	@Qualifier("mainDiscountPolicy")
+	public class RateDiscountPolicy implements DiscountPolicy {}
+	
+	
+	@Component
+	@Qualifier("fixDiscountPolicy")
+	public class FixDiscountPolicy implements DiscountPolicy {}
+	
+	// 생성자 주입(수정자 주입도 똑같이 사용하면 된다.
+	@Autowired
+	public OrderServiceImpl(MemberRepository memberRepository, @Qualifier("mainDiscountPolicy") DiscountPolicy discountPolicy) {
+ 		this.memberRepository = memberRepository;
+ 		this.discountPolicy = discountPolicy;
+	}
+	
+	```
+	
+   - @Primary 사용 -> 우선순위를 준다. 같은 타입의 여러 빈이 있더라도 우선권이 있는 빈이 주입된다.
+	```java
+	
+	@Component
+	@Primary
+	public class RateDiscountPolicy implements DiscountPolicy {}
+	
+	
+	@Component
+	public class FixDiscountPolicy implements DiscountPolicy {}
+	
+	// 생성자 주입(수정자 주입도 똑같이 사용하면 된다.
+	@Autowired
+	public OrderServiceImpl(MemberRepository memberRepository,DiscountPolicy discountPolicy) {
+ 		this.memberRepository = memberRepository;
+ 		this.discountPolicy = discountPolicy;
+	}
+	
+	```
+	- @Qualifier가 @Primary보다 우선권이 높으며 예를 들어 메인 데이터베이스의 커넥션을 획득하는 스프링 빈은 @Primary를 통해 편리하게 조회하고 서브 데이터베이스에선
+	@Qualifier를 통해 명시적으로 획득하는 방식으로 사용하여 코드를 깔끔하게 유지할 수 있다.
 
 	
