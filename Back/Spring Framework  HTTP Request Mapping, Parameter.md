@@ -483,16 +483,242 @@ public class RequestParamController {
 }
 
 
+```
+
+<br>
+<hr>
+<br>
+
+# RequestBodyString!
+```java
+package hello.springmvc.basic.request;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Writer;
+import java.nio.charset.StandardCharsets;
+
+import javax.servlet.ServletInputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.util.StreamUtils;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+
+@Controller
+public class RequestBodyStringController {
+	
+	/*
+	 * HTTP 메시지 바디의 데이터를 InputStream을 사용해 직접 읽을 수 있다.
+	 */
+	@PostMapping("/request-body-string-v1")
+	public void requestBodyString(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		ServletInputStream inputStream = request.getInputStream();
+		String messageBody = StreamUtils.copyToString(inputStream, StandardCharsets.UTF_8);
+
+		log.info("messageBody={}", messageBody);
+		
+		response.getWriter().write("ok");
+	}
+	
+	
+	/*
+	 * Spring MVC는 다음파라미터를 지원한다.
+	 * InputStream(Reader): HTTP 요청 메시지 바디의 내용을 직접 조회할 수 있다.
+	 * OutputStream(Writer): HTTP 응답 메시지의 바디에 직접 결과 출력할 수 있다.
+	 */
+	@PostMapping("/request-body-string-v2")
+	public void requestBodyStringV2(InputStream inputStream, Writer responseWriter) throws IOException {
+		String messageBody = StreamUtils.copyToString(inputStream, StandardCharsets.UTF_8);
+		
+		log.info("messageBody={}", messageBody);
+		
+		responseWriter.write("ok");
+	}
+	
+	
+	/*
+	 * HttpEntity: HTTP header, body 정보를 편리하게 조회할 수 있다.
+	 * - 메시지 바디 정보를 직접 조회(@RequestParam X, @ModelAttribute X)
+	 * - HttpMessageConverter 사용 -> StringHttpMessageConverter 적용
+	 *
+	 * 응답에서도 HttpEntity 사용 가능
+	 * - 메시지 바디 정보 직접 반환(view 조회X)
+	 * - HttpMessageConverter 사용 -> StringHttpMessageConverter 적용
+	 * 
+	 * - HttpEntity를 상속받은 RequestEntity, ResponseEntity를 사용할 수도 있다.
+	 */
+	@PostMapping("/request-body-string-v3")
+	public HttpEntity<String> requestBodyStringV3(HttpEntity<String> httpEntity) {
+//	public HttpEntity<String> requestBodyStringV3(RequestEntity<String> httpEntity) {
+		String messageBody = httpEntity.getBody();
+		
+		log.info("messageBody={}", messageBody);
+		
+		return new HttpEntity<>("ok");
+//		return new ResponseEntity<String>("ok", HttpStatus.OK);
+	}
+	
+	
+	/*
+	 * @RequestBody
+	 * - 메시지 바디 정보를 직접 조회(@RequestParam X, @ModelAttribute X)
+	 * - HttpMessageConverter 사용 -> StringHttpMessageConverter 적용
+	 *
+	 * @ResponseBody
+	 * - 메시지 바디 정보 직접 반환(view 조회X)
+	 * - HttpMessageConverter 사용 -> StringHttpMessageConverter 적용
+	 */ 
+	@PostMapping("/request-body-string-v4")
+	@ResponseBody
+	public String requestBodyStringV4(@RequestBody String messageBody) {
+		log.info("messageBody={}", messageBody);
+		return "ok";
+	}
+	
+	
+	
+	
+}
 
 
 
+```
 
+<br>
+<hr>
+<br>
 
+# RequestBodyJson
+```
+package hello.springmvc.basic.request;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
+import javax.servlet.ServletInputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.http.HttpEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.util.StreamUtils;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 
+import hello.springmvc.basic.HelloData;
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * {"username":"hello", "age":20}
+ * content-type: application/json
+ */
+
+@Slf4j
+@Controller
+public class RequestBodyJsonController {
+	
+	
+	private ObjectMapper objectMapper = new ObjectMapper();
+ 
+	@PostMapping("/request-body-json-v1")
+	public void requestBodyJsonV1(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		ServletInputStream inputStream = request.getInputStream();
+		String messageBody = StreamUtils.copyToString(inputStream, StandardCharsets.UTF_8);
+		
+		log.info("messageBody={}", messageBody);
+		
+		HelloData data = objectMapper.readValue(messageBody, HelloData.class);
+		
+		log.info("username={}, age={}", data.getUsername(), data.getAge());
+		
+		response.getWriter().write("ok");
+	}
+	
+	
+	/*
+	 * @RequestBody
+	 * HttpMessageConverter 사용 -> StringHttpMessageConverter 적용
+	 *
+	 * @ResponseBody
+	 * - 모든 메서드에 @ResponseBody 적용
+	 * - 메시지 바디 정보 직접 반환(view 조회X)
+	 * - HttpMessageConverter 사용 -> StringHttpMessageConverter 적용
+	 */
+	@ResponseBody
+	@PostMapping("/request-body-json-v2")
+	public String requestBodyJsonV2(@RequestBody String messageBody) throws	IOException {
+		HelloData data = objectMapper.readValue(messageBody, HelloData.class);
+	 
+		log.info("username={}, age={}", data.getUsername(), data.getAge());
+		
+		return "ok";
+	}
+	
+	
+	/*
+	 * @RequestBody 생략 불가능(@ModelAttribute 가 적용되어 버림(body가 아닌 parameter를 처리하게 된다!!!)
+	 * - 객체를 바로 받을 수 있다.
+	 * HttpMessageConverter 사용 -> MappingJackson2HttpMessageConverter (contenttype: application/json)
+	 *
+	 */
+	@ResponseBody
+	@PostMapping("/request-body-json-v3")
+	public String requestBodyJsonV3(@RequestBody HelloData data) {
+		log.info("username={}, age={}", data.getUsername(), data.getAge());
+		
+		return "ok";
+	}
+	
+	/*
+	 * @HttpEntiity로 body 꺼내기
+	 */
+	
+	@ResponseBody
+	@PostMapping("/request-body-json-v4")
+	public String requestBodyJsonV4(HttpEntity<HelloData> httpEntity) {
+		HelloData data = httpEntity.getBody();
+		
+		log.info("username={}, age={}", data.getUsername(), data.getAge());
+		
+		return "ok";
+	}
+	
+	
+	/*
+	 * @RequestBody 생략 불가능(@ModelAttribute 가 적용되어 버림)
+	 * HttpMessageConverter 사용 -> MappingJackson2HttpMessageConverter (contenttype: application/json)
+	 *
+	 * @ResponseBody 적용
+	 * - 메시지 바디 정보 직접 반환(view 조회X)
+	 * - HttpMessageConverter 사용 -> MappingJackson2HttpMessageConverter 적용(Accept: application/json)
+	 * 흐름 : Json 요청 -> RequestBody -> 객체 - -> ResponseBody > Json 응답
+	 */
+	@ResponseBody
+	@PostMapping("/request-body-json-v5")
+	public HelloData requestBodyJsonV5(@RequestBody HelloData data) {
+		log.info("username={}, age={}", data.getUsername(), data.getAge());
+		
+		return data;
+	}
+	
+	
+	
+}
 
 
 
@@ -502,12 +728,11 @@ public class RequestParamController {
 
 
 
-
-
-
-
-
-
-
+<br>
+<br>
+<br>
+<br>
+<br>
+참조 : 
 
 
