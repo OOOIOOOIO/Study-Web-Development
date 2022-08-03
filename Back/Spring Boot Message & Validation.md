@@ -211,7 +211,7 @@
 
 <br>
 
-## 코드
+## Controller 코드 설명
 - addItemV1 
 ![image](https://user-images.githubusercontent.com/74396651/182048498-aa5b4741-ab48-41ed-87ae-a82be88897b2.png)
 ![image](https://user-images.githubusercontent.com/74396651/182048508-38ed4407-2a0f-4a1a-9355-462c817b0a68.png)
@@ -234,7 +234,7 @@
 
 <br>
 
-- #### Validator분리
+- ### Validator를 분리해 공통 작업을 수행한다.
 ```
 package hello.itemservice.web.validation;
 
@@ -293,6 +293,8 @@ public class ItemValidator implements Validator {
 
 <br>
 
+## Controller
+
 ```
 package hello.itemservice.web.validation;
 
@@ -324,7 +326,7 @@ public class ValidationItemControllerV2 {
     private final ItemRepository itemRepository;
     private final ItemValidator itemValidator;
 
-    // 이 컨트롤러에 요청이 올 때마다 적용된다. 사용하고자 하는 메서드에 @Validated를 넣어줘야한다. V6에서 사용
+    // 이 컨트롤러에 요청이 올 때마다 적용된다. 사용하고자 하는 메서드에 @Validated를 넣어줘야한다. addItemV6에서 사용
     @InitBinder
     public void init(WebDataBinder dataBinder) {
         dataBinder.addValidators(itemValidator);
@@ -353,7 +355,7 @@ public class ValidationItemControllerV2 {
 
     
     // item 값이 안넘어간다.
-//    @PostMapping("/add")ㅁ
+//    @PostMapping("/add")
     public String addItemV1(@ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
     	
     	// bindingResult가 errors 역할을 해준다.
@@ -585,9 +587,295 @@ public class ValidationItemControllerV2 {
 ```
 
 <br>
+
+# Bean Validation
+- 검증을 매번 코드로 작성하는 것은 번거롭기 때문에 간단한 어노테이션을 통해 유효성을 검증할 수 있다.
+- Bean Validation은 특정한 구현체가 아니라 Bean Validation 2.0(JSR-380)이라는 기술 표준이다. 
+- 쉽게 이야기해서 검증 애노테이션과 여러 인터페이스의 모음이다. 마치 JPA가 표준 기술이고 그 구현체로 하이버네이트가 있는 것과 같다.
+- Bean Validation을 구현한 기술중에 일반적으로 사용하는 구현체는 하이버네이트 Validator이다. 이름이 하이버네이트가 붙어서 그렇지 ORM과는 관련이 없다
+
+## @Valid 종류(@Validated도 동일하게 사용할 수 있다.)
+```
+JSR-303 어노테이션 종류
+
+@AssertFalse : false 값만 통과 가능
+
+@AssertTrue : true 값만 통과 가능
+
+@DecimalMax(value=) : 지정된 값 이하의 실수만 통과 가능
+
+@DecimalMin(value=) : 지정된 값 이상의 실수만 통과 가능
+
+@Digits(integer=,fraction=) : 대상 수가 지정된 정수와 소수 자리수보다 적을 경우 통과 가능
+
+@Future : 대상 날짜가 현재보다 미래일 경우만 통과 가능
+
+@Past : 대상 날짜가 현재보다 과거일 경우만 통과 가능
+
+@Max(value) : 지정된 값보다 아래일 경우만 통과 가능
+
+@Min(value) : 지정된 값보다 이상일 경우만 통과 가능
+
+@NotNull : null 값이 아닐 경우만 통과 가능
+
+@Null : null일 겨우만 통과 가능
+
+@Pattern(regex=, flag=) : 해당 정규식을 만족할 경우만 통과 가능
+
+@Size(min=, max=) : 문자열 또는 배열이 지정된 값 사이일 경우 통과 가능
+
+@Valid : 대상 객체의 확인 조건을 만족할 경우 통과 가능
+
+@NotEmpty	주입된 값의 길이가 0이면 오류 발생, 공백도 글자로 인식합니다.
+
+@NotBlank	주입된 값의 공백을 제거하고 길이가 0이면 오류 발생
+
+@Positive	양수가 아니라면 오류 발생
+
+@PositiveOrZero	0또는 양수가 아니라면 오류 발생
+
+@Negative	음수가 아니라면 오류 발생
+
+@NegativeOrZero	0또는 음수가 아니라면 오류 발생
+
+@Email	이메일 형식이 아니라면 오류 발생, 중간에 @가 있는지 정도만 확인한다.
+
+```
+
+<br>
+
+## Spring MVC에서 Bean Validator 사용
+- Spring Boot가 ```spring-boot-starter-validation``` 라이브러리를 넣으면 자동으로 Bean Validator를 인지하고 스프링에 통합한다.
+- @Validated는 스프링 전용 검증 어노테이션이고, @Valid는 자바 표준 검증 어노테이션이다. 
+- 검증시 @Validated, @Valid 둘 다 사용가능하지만 javax.validation.@Valid를 사용하려면 build.gradle에 의존관계를 추가해야 한다. ```implementation 'org.springframework.boot:spring-boot-starter-validation'```
+- Bean Validation은 바인딩에 성공한 필드여야 적용이 된다. 쉽게 생각해보면 일단 모델 객체에 바인딩 받는 값이 정상으로 들어와야 검증하는 의미가 있기 때문이다.
+
+<br>
+
+## Bean Validator 그룹 사용하기
+- 사실 사용법은 간단하다. 마커 인터페이스를 설정해 주는 것이다.
+- ```@어노테이션(groups = 인터페이스이름.class or {인터페이스1.class, ...2.class, ...})``` 처럼 사용하면 된다.
+
+<br>
+
+###  마커 인터페이스
+![image](https://user-images.githubusercontent.com/74396651/182607889-7d849397-ec16-437f-8288-804cdfa5d0ab.png)
+
+### DTO
+![image](https://user-images.githubusercontent.com/74396651/182607854-4e578509-5fd7-47f6-a934-f4469354aab5.png)
+
+### Controller
+![image](https://user-images.githubusercontent.com/74396651/182608215-70381842-5610-419c-8edc-3b53b7974d64.png)
+
+
+![image](https://user-images.githubusercontent.com/74396651/182608263-fa69ee6f-9e37-4581-8b12-4830ba261c34.png)
+
+<br>
+
+## 전송 객체 분리하기
+- 사실 위처럼 마커 인터페이스를 통해 groups로 묶는 것은 로직이 길어질 수록 점점 복잡해지고 검증이 중복될 수도 있다.
+- 따라서 전송 객체를 분리하여 각각의 도매인 객체에 Validation을 해준다면 유지보수에도 좋고 확실하게 판단할 수 있게 된다!
+
+<br>
+
+## 코드로 살펴보기
+- 도메인 객체 Item
+- add를 통해 들어오는 ItemSaveForm 객체
+- edit을 통해 들어오는 ItemUpdateForm 객체 로 나누어 각각 사용용도에 맞게 검증한다.
+
+#### item
+```
+@Data
+public class Item {
+ private Long id;
+ private String itemName;
+ private Integer price;
+ private Integer quantity;
+}
+```
+
+<br>
+
+#### ItemSaveForm
+```
+package hello.itemservice.web.validation.form;
+import lombok.Data;
+import org.hibernate.validator.constraints.Range;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+@Data
+public class ItemSaveForm {
+ @NotBlank
+ private String itemName;
+ @NotNull
+ @Range(min = 1000, max = 1000000)
+ private Integer price;
+ @NotNull
+ @Max(value = 9999)
+ private Integer quantity;
+}
+```
+
+<br>
+
+#### ItemUpdateForm
+```
+package hello.itemservice.web.validation.form;
+import lombok.Data;
+import org.hibernate.validator.constraints.Range;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+@Data
+public class ItemUpdateForm {
+ @NotNull
+ private Long id;
+ @NotBlank
+ private String itemName;
+ @NotNull
+ @Range(min = 1000, max = 1000000)
+ private Integer price;
+ //수정에서는 수량은 자유롭게 변경할 수 있다.
+ private Integer quantity;
+}
+```
+
+<br>
+
+### Controller
+```
+package hello.itemservice.web.validation;
+
+import hello.itemservice.domain.item.Item;
+import hello.itemservice.domain.item.ItemRepository;
+import hello.itemservice.domain.item.SaveCheck;
+import hello.itemservice.domain.item.UpdateCheck;
+import hello.itemservice.web.validation.form.ItemSaveForm;
+import hello.itemservice.web.validation.form.ItemUpdateForm;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
+
+@Slf4j
+@Controller
+@RequestMapping("/validation/v4/items")
+@RequiredArgsConstructor
+public class ValidationItemControllerV4 {
+
+    private final ItemRepository itemRepository;
+
+    @GetMapping
+    public String items(Model model) {
+        List<Item> items = itemRepository.findAll();
+        model.addAttribute("items", items);
+        return "validation/v4/items";
+    }
+
+    @GetMapping("/{itemId}")
+    public String item(@PathVariable long itemId, Model model) {
+        Item item = itemRepository.findById(itemId);
+        model.addAttribute("item", item);
+        return "validation/v4/item";
+    }
+
+    @GetMapping("/add")
+    public String addForm(Model model) {
+        model.addAttribute("item", new Item());
+        return "validation/v4/addForm";
+    }
+
+    // ItemSaveForm 객체가 들어와 Item 객체로 변환된다.
+    @PostMapping("/add")
+    public String addItem(@Validated @ModelAttribute("item") ItemSaveForm form, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+
+        //특정 필드가 아닌 복합 룰 검증
+        if (form.getPrice() != null && form.getQuantity() != null) {
+            int resultPrice = form.getPrice() * form.getQuantity();
+            if (resultPrice < 10000) {
+                bindingResult.reject("totalPriceMin", new Object[]{10000, resultPrice}, null);
+            }
+        }
+
+        //검증에 실패하면 다시 입력 폼으로
+        if (bindingResult.hasErrors()) {
+            log.info("errors={} ", bindingResult);
+            return "validation/v4/addForm";
+        }
+
+        //성공 로직
+        Item item = new Item();
+        item.setItemName(form.getItemName());
+        item.setPrice(form.getPrice());
+        item.setQuantity(form.getQuantity());
+
+        Item savedItem = itemRepository.save(item);
+        redirectAttributes.addAttribute("itemId", savedItem.getId());
+        redirectAttributes.addAttribute("status", true);
+        return "redirect:/validation/v4/items/{itemId}";
+    }
+
+    @GetMapping("/{itemId}/edit")
+    public String editForm(@PathVariable Long itemId, Model model) {
+        Item item = itemRepository.findById(itemId);
+        model.addAttribute("item", item);
+        return "validation/v4/editForm";
+    }
+
+    // ItemUpdateForm 객체가 들어와 Item 객체로 변환된다.
+    @PostMapping("/{itemId}/edit")
+    public String edit(@PathVariable Long itemId, @Validated @ModelAttribute("item") ItemUpdateForm form, BindingResult bindingResult) {
+
+        //특정 필드가 아닌 복합 룰 검증
+        if (form.getPrice() != null && form.getQuantity() != null) {
+            int resultPrice = form.getPrice() * form.getQuantity();
+            if (resultPrice < 10000) {
+                bindingResult.reject("totalPriceMin", new Object[]{10000, resultPrice}, null);
+            }
+        }
+
+        if (bindingResult.hasErrors()) {
+            log.info("errors={}", bindingResult);
+            return "validation/v4/editForm";
+        }
+
+        Item itemParam = new Item();
+        itemParam.setItemName(form.getItemName());
+        itemParam.setPrice(form.getPrice());
+        itemParam.setQuantity(form.getQuantity());
+
+        itemRepository.update(itemId, itemParam);
+        return "redirect:/validation/v4/items/{itemId}";
+    }
+
+}
+
+
+```
+	
+	
+
+
+
+
+
+
+
+
+
+
 <br>
 <br>
 <br>
 <br>
 <br>
+
+
 참조 : 인프런 김영한님 강의
+
