@@ -3,7 +3,8 @@
 - Code Runner(JS 실행)
 - Open in brower(html 브라우저로 띄우기)
 - Live server(server에서 띄우고 싶을 떄
-
+- TapOut(tap으로 괄호, 따움표, 태그들 자동완성)
+- 
 <hr>
 
 # 단축키
