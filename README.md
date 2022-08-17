@@ -66,7 +66,7 @@
 
 - [Ajax] 
 
--[Spring & Java 객체 지향 프로그래밍](https://github.com/OOOIOOOIO/Study-Web-Development/blob/master/Back/Spring%20&%20Java%20%EA%B0%9D%EC%B2%B4%20%EC%A7%80%ED%96%A5%20%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D.md)
+- [Spring & Java 객체 지향 프로그래밍](https://github.com/OOOIOOOIO/Study-Web-Development/blob/master/Back/Spring%20&%20Java%20%EA%B0%9D%EC%B2%B4%20%EC%A7%80%ED%96%A5%20%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D.md)
 
 - [Spring Framework DB연결 및 환경설정]
 
