@@ -43,10 +43,74 @@ private EntityManager entityManager
 ## EntityManagerFactory
 - EntityManager를 찍어내는 곳.
 -  EntityManagerFactory는 Thread Safe해서 여러 스레드가 동시에 접근해도 안전하므로 서로 다른 쓰레드 간 공유하여 사용한다.
-    - 동시성(Concurrency) : 사용자가 체감하기에 동시에 수행하느 것처럼 보이지만, 사실 사용자가 체감할 수 없는 짧은 시간단위로 작업들이 번갈아가며 수행되는 것이다.
-    - 병렬(Parallelism) : 실제로 동시에 여러 작업이 수행되는 개념이다.
+    - #### 동시성(Concurrency) : 사용자가 체감하기에 동시에 수행하느 것처럼 보이지만, 사실 사용자가 체감할 수 없는 짧은 시간단위로 작업들이 번갈아가며 수행되는 것이다.
+    - #### 병렬(Parallelism) : 실제로 동시에 여러 작업이 수행되는 개념이다.
 - Hibernate에서는 SessionFactory이다.
     
+<br>
+
+## Entity 생명주기
+- #### 비영속(new/transient)
+   - 영속성 컨텍스트와 전혀 관계가 없는 새로운 상태
+- #### 영속(managed)
+   - 영속성 컨텍스트에 관리되는 상태
+- #### 준영속(detached)
+   - 영속성 컨텍스트에 저장되어 있다 분리된 상태
+- #### 삭제(removed)
+   - 삭제된 상태
+
+![image](https://user-images.githubusercontent.com/74396651/197519857-1b298af5-409a-4cdd-93e1-972dda386615.png)
+
+<br>
+
+## 영속성 컨텍스트의 이점
+- 1차 캐시
+   - <code>em.find(엔티티클래스, pk)</code>
+- 동일성(identity) 보장
+   - 1차 캐시로 반복 가능한 읽기(REPEATABLE READ) 등급의 트랜잭션 격리 수준을 데이터베이스가 아닌 애플리케이션 차원에서 제공한다.
+- ### 트랜잭션을 지원하는 쓰기 지연(transaction write-behind)
+
+![image](https://user-images.githubusercontent.com/74396651/197521420-45691b91-9eb0-4e93-a244-08291cbccebc.png)
+
+![image](https://user-images.githubusercontent.com/74396651/197521463-a45c4136-59e8-425b-af74-683a951a26e5.png)
+
+<br>
+
+- 변경 감지(Dirty Checking)
+   - setter로 수정만 해도 commit할 때 알아서 update를 해준다.
+
+![image](https://user-images.githubusercontent.com/74396651/197521531-363ddc8c-1ac4-4126-afc7-9771508ca898.png)
+
+<br>
+
+- 지연 로딩(Lazy Loading)
+
+<br>
+
+## flush가 발생하는 경우
+- 변경 감지
+- 수정된 엔티티 쓰기 지연 SQL 저장소에 등록
+- 쓰기 지연 SQL 저장소의 쿼리를 데이터베이스에 전송(등록, 수정, 삭제 쿼리)
+
+<br>
+
+## 영속성 컨텍스트를 플러시하는 방법
+- 직접 호출 : em.flush()
+- 플러쉬 자동 호출 : 트랜잭션 commit
+- 플러쉬 자동 호출 : JPQL 쿼리 
+
+## 플러쉬 모드 옵션
+<code>em.setFlushMode(FlushModeType.COMMIT)</code>
+- FlushModeType.AUTO : 커밋이나 JPQL 쿼리를 실행할 때 플러쉬 실행(기본값)
+- FlushModeType.COMMIT : 커밋할 때만 플러쉬
+ 
+<br>
+
+## 플러쉬
+- 영속석 컨텍스트를 비우지 않는다.
+- 영속성 컨텍스트의 변경내용을 데이터베이스에 동기화 한다.(db에 반영만)
+- 트랜잭션이라는 작업 단위 안에서 커밋 직전에만 동기화 하면 된다.
+   
 <br>
 
 # JPA의 CRUD 코드
@@ -83,17 +147,12 @@ public class JpaMain {
             member = new Member();
             member.setId(1L);
             member.setName("helloA");
-
+            
+            
             em.persist(member);
 
 
-            // select
-            Member findMember = em.find(Member.class, 1L); //
-            System.out.println("findMember = " + findMember.getId());
-            System.out.println("findMember = " + findMember.getName());
-
-
-            // Query로 select, JPQL 객체지향 쿼리 언어, SQL 문법 대부분 지원
+            // JPQL : 객체지향 쿼리 언어, Query로 select, SQL 문법 대부분 지원
             // JPQL은 엔티티 객체를 대상으로
             // SQL은 데이터베이스 테이블을 대상으로 쿼리를 짠다.
             List<Member> query = em.createQuery("select m from Member as m", Member.class)
@@ -162,6 +221,11 @@ public class JpaEntiyManager {
             // 아직 db에 동기화는 X
             em.persist(member1);
             em.persist(member2);
+
+            // select, 1차 캐시에서 조회
+            Member findMember1 = em.find(Member.class, 10L); 
+            Member findMember2 = em.find(Member.class, 10L); 
+            System.out.println(findMember1 == findMember2); // 동일성 보장
 
             // db에 sql 반영이 된다(commit이 되면 완전 db에 저장됨), flush를 해도 1차 캐쉬는 유지된다.
             // db에 동기화를 한다고 생각하면 된다.
