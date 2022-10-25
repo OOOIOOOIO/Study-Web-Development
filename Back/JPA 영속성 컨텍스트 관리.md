@@ -127,6 +127,7 @@ JPA는 트랜잭션이 중요하다. 모든 데이터의 변경은 트랜잭션 
 public class JpaMain {
     public static void main(String[] args) {
         // persistence.xml에 설정한 DB 불러오기. name = hello
+        // 여기서 Entity를 읽고 db에 Table을 생성해준다.
         // 하나만 생성해서 애플리케이션 전체에서 공유한다.
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello");
         
@@ -200,6 +201,7 @@ import javax.persistence.Persistence;
 public class JpaEntiyManager {
     public static void main(String[] args) {
         // persistence.xml에 설정한 DB 불러오기. name = hello
+        // 여기서 Entity를 읽고 db에 Table을 생성해준다.
         // 하나만 생성해서 애플리케이션 전체에서 공유한다.
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello");
 
