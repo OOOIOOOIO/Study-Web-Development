@@ -35,7 +35,19 @@
      - 주인 : ex) @ManyToOne @JoinColumn(name = "외래키 컬럼명")
      - 그외 : ex) @OneToMany(mappedBy = "객체명"), mappedBy 속성으로 주인 지정
 
+### 양방향 연결
+![image](https://user-images.githubusercontent.com/74396651/199026717-ed9d7a99-2883-49a3-92da-8bad5e194d7c.png)
 
+# 실전 예제
+
+## 테이블 구조
+![image](https://user-images.githubusercontent.com/74396651/199027072-7b0a4aab-3905-44ae-a355-a85c1fa5be57.png)
+    
+## 객체 구조
+![image](https://user-images.githubusercontent.com/74396651/199027197-2c997d34-3a6c-4d8f-83d0-92072a502c63.png)
+
+## 코드
+ㅗㄹ리기
 
 
 
