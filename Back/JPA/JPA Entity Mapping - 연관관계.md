@@ -89,6 +89,83 @@
 
 ![image](https://user-images.githubusercontent.com/74396651/199698071-08cdef16-dc6c-4ae1-a7d7-eefc86f32746.png)
 
+<br>
+
+- 일대다 양방향 
+     - 이런 매핑은 공식적으로 존재하지 않는다.
+     - @JoinColumn(insertable=false, updatable=false)
+     - 읽기 전용 필드를 사용해 양방향처럼 사용한다.
+     - 다대일 양방향을 사용하자.
+
+<br>
+<hr>
+<br>
+
+### 일대일[1 : 1] 관계(@OneToOne)
+- 일대일 관계는 그 반대도 일대일이여야 한다.
+- 주 테이블이나 대상 테이블 중에 외래 키를 아무 곳이나 선택할 수 있다.
+     - 주 테이블에 fk
+     - 대상 테이블에 fk
+- 외래 키에 DB 유니크 제약조건을 추가해야 한다.
+
+<br>
+- 일대일 : 주 테이블에 외래키 단방향
+     - 다대일(@ManyToOne) 단방향 매핑과 유사
+
+![image](https://user-images.githubusercontent.com/74396651/199908959-aaddfc74-81e9-40e9-b42d-8e1e6a315b2e.png)
+
+<br>
+
+- 일대일 : 주 테이블에 외래키 양방향
+     - 다대일 양방향 매핑처럼 외래키가 있는 곳이 연관관계의 주인
+     - 반대편은 mappedBy 적용(읽기 전용)
+
+![image](https://user-images.githubusercontent.com/74396651/199909089-26b52382-2ef7-4498-9e1e-71161f116801.png)
+
+- 일대일 : 대상 테이블에 외래키 단방향
+     - 단방향 관계는 JPA에서 지원 X
+     - 양방향 관계는 지원함
+
+![image](https://user-images.githubusercontent.com/74396651/199909605-4a543e57-855c-4875-9aa7-91c29eec93a9.png)
+
+<br>
+
+- 일대일 : 대상 테이블에 외래 키 단방향 정리
+     - 사실 일대일 주 테이블에 외래키 양방향 매핑 방법과 같다.
+
+![image](https://user-images.githubusercontent.com/74396651/199909747-d1f8ebea-252d-471d-895a-1387019a67df.png)
+
+<br>
+<hr>
+<br>
+
+### 다대다[N : M](@ManyToMany)
+- 관계형 데이터베이스는 정규화된 테이블 2개로 다대다 관계를 표현할 수 없다.
+     - 연결 테이블을 추가해 1 : N <-- ㅁ --> N : 1 관계로 풀어야 한다.
+![image](https://user-images.githubusercontent.com/74396651/199910263-9de23eb9-fdbe-4317-bb2b-491ef2aee058.png)
+
+
+- 객체는 컬렉션을 사용해 객체 2개로 다대다 관계가 가능하다
+![image](https://user-images.githubusercontent.com/74396651/199910285-9a6ba9bb-8c95-4200-9d26-841ccfd4b362.png)
+
+
+- @ManyToMany 사용
+- @JoinTable로 연결 테이블 지정
+- 다대다 매핑 : 단방향, 양방향 가능
+
+#### 한계
+- 편리해 보이지만 실부에서 사용하지 않는다.
+- 연결 테이블이 단순히 연결만 하고 끝나지 않는다.(정보 저장, 조회 등등)
+- 주문시간, 수량, 등 데이터가 들어올 수 있다.
+
+<br>
+
+#### 한계 극복
+- 연결 테이블용 엔티티 추가(연결 테이블을 엔티티로 승격)
+- @ManyToMany --> @OneToMany + @ManyToOne 으로 변경
+
+![image](https://user-images.githubusercontent.com/74396651/199910552-e6dedf69-712b-4c39-9349-47343d1adc3f.png)
+
 
 
 
