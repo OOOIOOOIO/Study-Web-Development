@@ -22,6 +22,9 @@
 
 ![image](https://user-images.githubusercontent.com/74396651/200245699-d0d30541-c601-4ab8-afd8-a6df85c8365f.png)
 
+![image](https://user-images.githubusercontent.com/74396651/200247664-87981829-edfc-46a6-bd51-18f3a75b9fe6.png)
+
+
 <br>
 
 ## 조인 전략
