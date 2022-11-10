@@ -1,0 +1,287 @@
+# 객체지향 쿼리 언어 - JPQL(Java Persistence Query Language)
+
+## 배경
+- JPA를 사용하면 엔티티 객체를 중심으로 개발한다.
+- 단순한 쿼리는 괜찮지만 문제는 검색 쿼리이다.
+- 검색할 때도 테이블이 아닌 엔티티 객체를 대상으로 검색한다.
+- 모든 DB 데이터를 객체로 변환해서 검색하는 것은 불가능하다.
+- 필요한 데이터를 DB에서 불러오려면 결국 검색 조건이 포함된 SQL이 필요하다.
+
+<br>
+
+## JPQL(Java Persistence Query Language)
+- JPA는 SQL을 추상화한 JPQL이라는 객체 지향 쿼리 언어를 제공한다.
+- SQL과 문법이 유사하며 SELECT, FROM, WHERE, GROUP BY, HAVING, JOIN 등을 지원한다.
+- JPQL은 엔티티 객체를 대상으로 쿼리를 수행한다.(SQL은 DB 테이블을 대상으로 쿼리를 수행한다.)
+- SQL을 추상화하기 때문에 특정 데이터베이스 SQL에 의존하지 않는다.
+- JPQL은 결국 SQL로 변환된다.
+
+![image](https://user-images.githubusercontent.com/74396651/200510079-047ca048-a154-4c3b-b4cf-16105739703d.png)
+
+![image](https://user-images.githubusercontent.com/74396651/200511302-45e2d792-2602-4deb-891e-a36853c9a12e.png)
+
+<br>
+
+## 문법
+- 엔티티와 속성은 대소문자를 구분한다.
+- JPQL 키워드는 대소문자를 구분하지 않는다.
+   - select m from Member as m where m.age > 18 
+- 테이블 이름이 아닌 엔티티 이름을 사용한다.(별도로 엔티티 이름을 지정하지 않았다면 클래스 이름이 테이블 이름이다.)
+- 별칭(alias)은 필수이다.(as는 생략 가능하지만 권장)
+
+- 구조
+![image](https://user-images.githubusercontent.com/74396651/200513945-bdc37b86-820c-468c-a64f-4f8e773e4e51.png)
+
+<br>
+
+## 집합과 정렬
+- count, sum, avg, max, min 
+- GROUP BY, HAVING
+- ORDER BY
+- 등 다 지원한다.
+![image](https://user-images.githubusercontent.com/74396651/200512526-99fcafca-e2fb-42e0-bbf0-62b9b76bb879.png)
+
+<br>
+
+## TypeQuery, Query
+- TypeQuerty : 반환 타입이 명확할 때 사용한다.
+- Querty : 반환 타입이 명확하지 않을 때 사용한다.
+
+![image](https://user-images.githubusercontent.com/74396651/200512963-4c3bcc9b-bd0d-421f-ba58-629dcf3e35b0.png)
+
+## 결과 조회 API
+- query.getResultList() : 결과가 하나 이상일 때 사용하며 리스트로 반환
+   - 결과가 없다면 빈 리스트로 반환한다. 
+- quert.getSingResult() : 결과가 정확히 하나일 때 사용하며 단일 객체로 반환
+   - 결과가 없으면, javax.persistence.NoResultException
+   - 둘 이이면, javax.persistence.NonUniqueResultException 을 던진다.
+
+<br>
+
+## 파라미터 바인딩
+- 이름 기준
+![image](https://user-images.githubusercontent.com/74396651/200513709-a62e5ea2-5d26-48a7-88c7-e8c6c06e0971.png)
+
+<br>
+
+- 위치 기준
+![image](https://user-images.githubusercontent.com/74396651/200513741-1d1a20ea-02bd-49b6-b35c-44ddcda99d3a.png)
+
+<br>
+
+## 프로젝션
+- SELECT 절에 조회할 대상을 지정하는 것
+- DISTINCT로 중복을 제거할 수 있다.
+- 프로젝션 대상
+   - 엔티티
+   - 임베디드 타입
+   - 스칼라 타입(숫자, 문자 등 기본 데이터 타입)
+- 엔티티 프로젝션
+   - select m from Memer m 
+   - select m.team from Member m 
+- 임베디드 타입 프로젝션
+   - select m.address from Member m
+- 스칼라 타입 프로젝션
+   - select m.name, m.age from Member m
+
+<br>
+
+## 프로젝션 - 여러 값 조회
+- Query 타입으로 조회
+- Object[] 타입(배열)으로 조회
+- new 명령어로 조회
+    - 단순 값을 DTO로 바로 조회할 때 사용한다.
+    - 패키지 명을 포함해 전체 클래스 명을 입력해야 한다.
+    - 순서와 타입이 일치하는 생성자가 필요하다.
+    - ex) select new jpabook.jpql.UserDTO(m.username, m.age) from Member b
+
+<br>
+
+## 페이징 API
+- JPA는 페이징을 두 API로 추상화하여 제공한다.
+    - setFirstResult(int startPosition) : 조회 시작 위치(0부터 시작)
+    - setMaxResult(int maxResult) : 조회할 데이터 수 
+
+```java
+// 페이징 쿼리 0 ~ 19(20) 조회
+String jpql = "select m from Member m order by m.age desc";
+
+List<Member> resultList = em.createQuery(jpql, Member.class)
+                        .setFirstResult(0)
+                        .setMaxResults(19)
+                        .getResultList();
+```
+
+<br>
+
+## Join(조인)
+- 내부 조인
+    - select m from Member m join m.team t
+    - select t from Team t where t.team_id = m.id 쿼리가 나간다!!!(N+1문제)
+- 외부 조인
+    - select m from Member m left join m.team t
+- 세타 조인
+    - select count(m) from Member m, Team t where m.username = t.name
+
+<br>
+
+## Join - ON 절
+- JPA2.1부터 ON절 지원
+- 조인 대상 필터링(조건)
+```java
+ex) 회원과 팀을 조인하면서, 팀 이름이 A인 팀만 조인
+// JPQL
+select m, t from Member m left join m.team t on t.name='A'
+
+// SQL
+select m.*, t.* 
+from Member m 
+left join Team t on m.TEAM_ID = t.id and t.name='A'
+```
+<br>
+- 연관관계 없는 엔티티 외부 조인(하이버네이트 5.1부터)
+```java
+ex) 회원의 이름과 팀의 이름이 같은 대상 외부 조인
+// JPQL
+select m, t from Member m left join Team t on m.username = t.name
+
+// SQL
+select m.*, t.* 
+from Member m
+left join Team t on m.username = t.name
+```
+
+<br>
+
+## 서브 쿼리
+- JPA의 WHERE, HAVING 절에서만 사용 가능
+- SELECT 절도 가능(하이버네트에서 지원)
+- FROM 절의 서브쿼리는 불가능 --> JOIN으로 풀 수 있으면 풀어서 해결
+- 지원 함수
+    - NOT EXITS / EXISTS( subquerty ) : 서브 쿼리에 결과가 존재하면 참
+    - ALL, ANY, SOM ( subquery)
+       - ALL : 모두 만족하면 참
+       - ANY, SOME : 조건을 하나라도 만족하면 참
+    - NOT IN / IN ( subquery ) : 서브쿼리의 결과 중하나라도 같은 것이 있으면 참
+
+```java
+// ex) 팀 A 소속인 회원
+select m from Member m
+where exists (select t from Team t where t.name='팀A')
+
+// ex) 전체 상품 각각의 재고보다 주문량이 많은 재품들
+select o from Orders o
+where o.orderAmount > ALL (select p.stockAmount from Product p)
+
+// ex) 어떤 팀이든 팀에 소속된 회원
+select m from Member m
+where m.team = ANY (select t from Team t)
+
+```
+
+<br>
+
+## JPQL 타입 표현 및 기타 표현
+- 문자
+    - 'hello', 'she"s'
+- 숫자
+    - 10L, 10D, 10F
+- Boolean
+    - TRUE, FALSE
+- ENUMM
+    - jpabook.MemberType.Admin(패키지명 포함)
+- 엔티티 타입
+    - TYPE(m) = Member(상속 관계에서 사용)
+- SQL과 문법이 같은 식 지원
+    - EXISTS, IN
+    - AND, OR, NOT
+    - =, <=, >=, <, >
+    - BETWEEN, LIKE, IS NULL
+
+<br>
+
+## 조건식 - CASE
+![image](https://user-images.githubusercontent.com/74396651/200992133-0c6d4846-d350-4ae3-9d8d-7a87f2b8d362.png)
+
+<br>
+
+- COALESCE : 하나씩 조회해 null이 아니면 반환
+- NULLIF : 두 값이 같으면 NULL 반환, 다르면 첫번째 값 반환
+
+![image](https://user-images.githubusercontent.com/74396651/200992246-a8202f91-c6ef-4305-a6ad-b57e045a7e5e.png)
+
+<br>
+
+## JPQL 기본 함수
+- CONCAT
+- SUBSTRING
+- TRIM
+- LOWER, UPPER
+- LENGTH
+- LOCATE
+- ABS, SQRT, MOD
+- SIZE, INDEX(JPA 용도) 
+- #### 사용자 정의 함수
+    - 하이버네이트는 사용 전 방언에 추가해야 한다.
+    - 사용하는 DB 방언을 상속받고 사용자 정의 함수를 등록한다.
+    - ex) select function('group_concat', i.name) from Item i
+
+<br>
+
+## JPQL - 경로 표현식
+- 경로 표현식
+    -  . 을 찍어 객체 그래프를 탐색하는 것
+
+![image](https://user-images.githubusercontent.com/74396651/200994489-c685bafa-e5e0-4df0-b01f-9f2a16a9939a.png)
+
+- #### 용어 정리 
+- 상태 필드(state field)
+    - 단순히 값을 저장하기 위한 필드(그냥 컬럼)
+    - ex) m.name
+- 연관 필드(association field)
+    - 연관관계를 위한 필드(엔티티, 컬렉션 등)
+    - 단일 값 연관 필드 
+       - @ManyToOne, @OneToOne
+       - ex) m.team
+    - 컬렉션 값 연관 필드 
+       - @OneToMany, @ManyToMany
+       - ex1) m.orders
+
+<br>
+   
+- #### 특징
+- 상태 필드
+- 단일 값 연관 경로
+- 컬렉션 값 연관 경로
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+SELECT 쿼리를 가져올 시 엔티티 안에 외래키, 즉 객체가 있을 시 프록시 객체로 가져오게 된다. 이때 프록시 객체를 실제 데이터로 불러올 때마다 SELECT 쿼리가 발생하는 문제가 발생한다, 이것이 바로 N+1 문제이다. 즉시 로딩, 지연 로딩이든 모두 N+1 문제가 발생하기 때문에 이를 해결하기 위해선 fetch join을 사용해야 한다.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+참조 : 인프런 김영한님 강의
