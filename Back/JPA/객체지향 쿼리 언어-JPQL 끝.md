@@ -146,9 +146,10 @@ ex) 회원의 이름과 팀의 이름이 같은 대상 외부 조인
 select m, t from Member m left join Team t on m.username = t.name
 
 // SQL
-select m.*, t.* 
-from Member m
-left join Team t on m.username = t.name
+SELECT m.*, t.* 
+FROM Member m
+LEFT JOIN Team t 
+ON m.username = t.name
 ```
 
 <br>
@@ -165,6 +166,7 @@ left join Team t on m.username = t.name
     - NOT IN / IN ( subquery ) : 서브쿼리의 결과 중하나라도 같은 것이 있으면 참
 
 ```java
+// JPQL 예시
 // ex) 팀 A 소속인 회원
 select m from Member m
 where exists (select t from Team t where t.name='팀A')
@@ -250,18 +252,78 @@ where m.team = ANY (select t from Team t)
 <br>
    
 - #### 특징
-- 상태 필드
+- 상태 필드(state field) 
+    - 경로 탐색의 끝, 더이상 탐색하지 않는다.
 - 단일 값 연관 경로
+    - 묵시적으로 내부 조인(inner join)이 발생한다. 탐색 가능
 - 컬렉션 값 연관 경로
+    - 묵시적으로 내부 조인(inner join)이 발생한다. 더이상 탐색하지 않는다.
+    - FROM 절에서 명시적 조인을 통해 별칭을 얻으면 별칭을 통해 탐색이 가능하다.
 
+<br>
 
+### 상태 필드 경로 탐색
+```java
+// JPQL
+select m.name, m.age from Member m
 
+// SQL
+SELECT m.name, m.age FROM Member m
+```
 
+<br>
 
+### 단일 값 연관 경로 탐색
+```java
+// JPQL
+select m.team from member
 
+// SQL
+SELECT m.*
+FROM Member m
+INNER JOIN Member m ON m.team_id=t.id
+```
 
+<br>
 
+## 명시적 조인, 묵시적 조인
+- 명시적 조인(권장!!!!!!!!!!!)
+    - join 키워드를 직접 사용
+    - jpql ex) select m from Member m join m.team t
+- 묵시적 조인
+    - 경로 표현식에 의해 묵시적으로 SQL 조인이 발생한다.(inner join만 가능)
+    - jpql ex) select m.team from Member m 
 
+### 경로 탐색을 사용한묵시적 조인 시 주의사항
+- 항상 내부 조인이 일어난다.
+- 컬렉션은 경로 탐색의 끝이다. 사용하기 위해선 명시적 조인을 통해 별칭을 얻어 사용한다.
+- 경로 탐색은 주로 SELECT, WHERE 절에서 사용하지만 묵시적 조인으로 인해 SQL의 FROM(JOIN)절에 영향을 준다.
+- 가급적이면 명시적 조인을 사용하라!!!
+- JOIN은 SQL 튜닝에서 중요한 포인트이다.
+- 묵시적 조인은 조인이 일어나는 상황을 한눈에 파악하기 어렵다.
+
+<br>
+
+## JOIN - fetch join(페치 조인)
+- SQL 조인의 종류가 아니다!
+- JPQL에서 성능 최적화를 위해 제공하는 기능
+- 연관된 엔티티나 컬렉션을 SQL 한 번에 함께 조회하는 기능이다.(Eager와 비슷)
+- join fetch 명령어를 사용한다.
+- LEFT / INNER JOIN FETCH 조인 경로
+
+<br>
+
+## 엔티티 페치 조인
+- 회원을 조회하면서 연관된 팀도 함께 조회(SQL 한 번에 조회)
+```java
+// JPQL
+select m from Member m join fetch m.team
+
+// SQL
+SELECT m.*, t.* FROM MEMBER M
+JOIN TEAM t 
+INNER ON m.TEAM_ID=T.ID
+```
 
 
 
