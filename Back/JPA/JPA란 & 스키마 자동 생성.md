@@ -43,3 +43,38 @@
 - 프로젝트의 규모가 크고 복잡하여 설계가 잘못된 경우, 속도 저하 및 일관성을 무너뜨리는 문제점이 생길 수 있다.
 - 복잡하고 무거운 Query는 속도를 위해 별도의 튜닝이 필요하기 때문에 결국 SQL문을 써야할 수도 있다.
 - 학습비용이 비싸다.
+
+<br>
+
+## 스키마 자동 생성
+- JPA는 DB 스키마를 자동으로 생성하는 기능을 지원한다. 클래스의 매핑 정보를 분석하여 어떤 테이블이 어떤 컬럼을 사용하는지 알 수 있고 방언(dialect)에 따라 해당 DB에 맞는 스키마를 생성할 수 있다.
+- 방언
+    - H2: org.hibernate.dialect.H2Dialect
+    - oracle 10g: org.hibernate.dialect.Oracle10gDialect
+    - MySQL: org.hibernate.dialect.MySQL5InnoDBDialect
+- 하지만 맹목적으로 믿으면 안되고 수정을 거쳐 목적에 맞게 스키마를 작성해야 한다.
+
+<br>
+
+### 설정하기
+- application.properties
+```java
+spring.jpa.hibernate.ddl-auto=create
+```
+
+- application.yml
+```java
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create
+    # show-sql: true # DDL 출력
+```
+    - spring.jpa.hibernate.ddl-auto 속성
+    - create: 기존 테이블을 삭제하고 새로 생성 (DROP - CREATE)
+    - create-drop: create와 동일하나 어플리케이션 종료시 테이블 삭제 (DROP - CREATE - DROP)
+    - update: 데이터베이스 테이블 - 엔터티 매핑정보를 비교해서 변경사항만 수정
+    - validate: 데이터베이스 테이블 - 엔터티 매핑정보를 비교해서 차이가있으면 어플리케이션을 실행하지 않음
+    - none: 자동 생성 기능을 사용하지 않음
+    
+### local에서 test 및 개발 단계에서는 create, update를 사용할 수 있지만, 실제 서비스, 베포 단계에서는 validate, none을 사용해야 한다. none을 권장한다.
