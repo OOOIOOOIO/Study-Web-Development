@@ -231,6 +231,7 @@ public class StudentServiceTest {
 - @OneToMany에 잡힌 List<T> 또한 <code>SELECT 쿼리</code>가 나가서 데이터를 가져온다. 이 뜻은 뭐냐, List 또한 1차 캐쉬에 있다는 뜻이다.
 - 접근할 경우 1차 캐시를 뒤지고 없으면 DB에 접근한다는 뜻인데, transaction 내가 아니라면 바로 에러가 발생한다.
 - 이미 transaction이 끝나고 1차 캐시 내에 접근하고자 하는 entitiy가 없다면 <code>org.hibernate.LazyInitializationException: failed to lazily initialize a collection of role: com.jpa.pratice.domain.MathClass.studentList, could not initialize proxy - no Session</code>가 발생한다.
+- 그리고 요청이 끝나면 영속성 컨텍스트에서 1차 캐시가 사라진다. 이 의미는 같은 트랜잭션이 아니라면 계속 쿼리가 나간다는 뜻!
 - ##그래서 결론은 같은 Transaction 내에서 처리하자.....
   
 <br>
