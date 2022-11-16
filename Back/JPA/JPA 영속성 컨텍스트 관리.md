@@ -19,13 +19,22 @@
 
 <br>
 
+## EntityManagerFactory
+- EntityManager를 찍어내는 곳.
+-  EntityManagerFactory는 Thread Safe해서 여러 스레드가 동시에 접근해도 안전하므로 서로 다른 쓰레드 간 공유하여 사용한다.
+    - #### 동시성(Concurrency) : 사용자가 체감하기에 동시에 수행하느 것처럼 보이지만, 사실 사용자가 체감할 수 없는 짧은 시간단위로 작업들이 번갈아가며 수행되는 것이다.
+    - #### 병렬(Parallelism) : 실제로 동시에 여러 작업이 수행되는 개념이다.
+- Hibernate에서는 SessionFactory이다.
+
+<br>
+
 ## EntityManager
 - 엔터티 매니저는 엔터티를 저장하는 메모리상의 데이터베이스라고 생각하면 될 것같다. 
 - 엔터티 매니저는 엔터티를 저장하고 수정하고 삭제하고 조회하는 등 엔터티와 관련된 모든일을 한다. 
-- 하지만 위의 EntityManagerFactory는 달리 Thread Safe하지 않기때문에 동시성 문제가 발생하므로 스레드간에 절대 공유하면 안 된다. 
+- 하지만 위의 EntityManagerFactory는 달리 EntityManager는 Thread Safe하지 않기때문에 동시성 문제가 발생하므로 스레드간에 절대 공유하면 안 된다. 
 - 그래서 일반적으로 EntityManager를 EntityManagerFactory를 이용하여 생성한것을 사용하는것이 아닌 스프링에서 관리하는 EntityManager를 아래와 같이 선언하여 사용한다. 
 - 이렇게되면 스프링에서 알아서 EntityManager를 Proxy로 깜싼 EntityManager를 생성 하여 주입해주기 때문에 Thread-Safety를 보장 한다.
-- Hibernate에서는 Session이다.
+- Hibernate에서는 Session이다.(no session 에러가 뜬다)
 ```java
 /*
 @PersistenceContext
@@ -36,17 +45,14 @@
 
 @PersistenceContext
 private EntityManager entityManager
+
+/* 
+Spring Data Jpa를 사용할 경우 생성자 주입을 통해 주입할 수 있다.
+
+private EntityManager em;
+*/
 ```
 
-<br>
-
-## EntityManagerFactory
-- EntityManager를 찍어내는 곳.
--  EntityManagerFactory는 Thread Safe해서 여러 스레드가 동시에 접근해도 안전하므로 서로 다른 쓰레드 간 공유하여 사용한다.
-    - #### 동시성(Concurrency) : 사용자가 체감하기에 동시에 수행하느 것처럼 보이지만, 사실 사용자가 체감할 수 없는 짧은 시간단위로 작업들이 번갈아가며 수행되는 것이다.
-    - #### 병렬(Parallelism) : 실제로 동시에 여러 작업이 수행되는 개념이다.
-- Hibernate에서는 SessionFactory이다.
-    
 <br>
 
 ## Entity 생명주기
