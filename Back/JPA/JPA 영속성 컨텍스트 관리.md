@@ -20,16 +20,19 @@
 <br>
 
 ## EntityManagerFactory
-- EntityManager를 찍어내는 곳.
+- EntityManager를 찍어내는 곳. DB 당 딱 1하나만 생성하여 사용한다.
 -  EntityManagerFactory는 Thread Safe해서 여러 스레드가 동시에 접근해도 안전하므로 서로 다른 쓰레드 간 공유하여 사용한다.
     - #### 동시성(Concurrency) : 사용자가 체감하기에 동시에 수행하느 것처럼 보이지만, 사실 사용자가 체감할 수 없는 짧은 시간단위로 작업들이 번갈아가며 수행되는 것이다.
     - #### 병렬(Parallelism) : 실제로 동시에 여러 작업이 수행되는 개념이다.
+- WAS가 종료되는 시점에 EntityManagerFactory.close()를 통해닫아준다.
+    - 그래야 내부적으로 Connection Pooling에 대한 자원이 반납된다. 
 - Hibernate에서는 SessionFactory이다.
 
 <br>
 
 ## EntityManager
 - 엔터티 매니저는 엔터티를 저장하는 메모리상의 데이터베이스라고 생각하면 될 것같다. 
+- Transactional 단위로 실행된다.
 - 엔터티 매니저는 엔터티를 저장하고 수정하고 삭제하고 조회하는 등 엔터티와 관련된 모든일을 한다. 
 - 하지만 위의 EntityManagerFactory는 달리 EntityManager는 Thread Safe하지 않기때문에 동시성 문제가 발생하므로 스레드간에 절대 공유하면 안 된다. 
 - 그래서 일반적으로 EntityManager를 EntityManagerFactory를 이용하여 생성한것을 사용하는것이 아닌 스프링에서 관리하는 EntityManager를 아래와 같이 선언하여 사용한다. 
@@ -71,7 +74,9 @@ private EntityManager em;
 
 ## 영속성 컨텍스트의 이점
 - 1차 캐시
-   - <code>em.find(엔티티클래스, pk)</code>
+   - persist를 통해 영속성 컨텍스트 1차 캐시에 저장할 수 있으며
+   - 만약 1차 캐시에 entity가 존재할 경우 db에 접근하지 않고 1차 캐시에서 데이터를 가져온다.
+   - 1차 캐시의 경우 요청이 종료되면 영속성 컨텍스트를 지우면서 삭제된다.
 - 동일성(identity) 보장
    - 1차 캐시로 반복 가능한 읽기(REPEATABLE READ) 등급의 트랜잭션 격리 수준을 데이터베이스가 아닌 애플리케이션 차원에서 제공한다.
 - ### 트랜잭션을 지원하는 쓰기 지연(transaction write-behind)
