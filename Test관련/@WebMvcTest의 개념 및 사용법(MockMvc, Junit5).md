@@ -7,6 +7,8 @@
 ## 주의점(JPA 설정과 충돌)
 > &nbsp; @SpringBootApplication가 붙은 클래스는 자동으로 모든 테스트들의 기본 설정이 적용된다. 테스트 코드는 실행될 때 @SpringBootApplication가 붙은 나의 ~Application.java를 로딩하는데, 테스트 코드에 붙은 @WebMvcTest는 JPA 관련 bean 객체 등을 로딩하지 않아 @EnableJpaAuditing과 설정이 맞지 않는 문제가 발생한다. 쉽게 말해 @WebMvcTest는 Entity를 안불러오는데 @EnableJpaAuditing은 불러와야 해서 서로 충돌한다는 것이다. 때문에 이를 해결하고 싶다면 @EnableJpaAuditing을 따로 Config 패키에 선언한다.<br>
 
+- 만약 JPA 기능까지 한번에 테스트 하고 싶다면 @SpringBootTest + TestRestTemplate을 사용하자!
+
 ![image](https://user-images.githubusercontent.com/74396651/202836018-450b23b0-91c0-4231-a58c-5eb258fa26e1.png)
 ![image](https://user-images.githubusercontent.com/74396651/202836038-9b702a1b-b9ad-4fe7-9f1e-fe01c90a634a.png)
 
