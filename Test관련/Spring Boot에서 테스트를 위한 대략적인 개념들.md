@@ -54,7 +54,8 @@
 
 Converter, GenericConverter, Filter, HandlerInterceptor, WebMvcConfigurer,  HandlerMethodArgumentResolver
 ```
-   - @MockMvc와 함께 사용되며 @ExtendWith(SpringExtension.class)이 내장되어 있다.
+   - <code>@Autowired MockMvc mvc</code>와 함께 사용되며 @ExtendWith(SpringExtension.class)이 내장되어 있다.
+   - service, repository dependency가 필요할 경우 <code>@MockBean Service service</code>를 통해 주입받아 테스트를 진행한다.
    - 그렇기 때문에 컨트롤러에서 호출하는 Service 객체등은 Mock으로 정의해야 한다!
    - 하지만 잘 사용하지는 않는다! RequestParams, PathVariable 검증 혹은 에러케이스의 응답처리 확인용으로 사용할 것 같다.
 
