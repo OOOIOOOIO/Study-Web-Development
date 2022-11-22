@@ -5,6 +5,8 @@
 <br>
 
 ## JPA에서의 Proxy
+- em.find -> DB를 통해 실제 엔티티 객체를 조회
+- em.getReference() -> DB 조회를 미루는 가짜(프록시) 엔티티 객체 조회
 - 실제 클래스를 상속 받아 만들어지며 겉 모양이 같다.
 - 사용하는 입장에서 진짜 객체인지 프록시 객체인지 신경쓰지 않고 사용하면 된다.
 ![image](https://user-images.githubusercontent.com/74396651/203362563-8947fa64-de9e-4a00-8bc2-98f4c94cf14f.png)
@@ -15,6 +17,9 @@
 
 - 프록시 객체는 처음 사용할 때 한 번만 초기화 된다.
 - 프록시 객체를 초기화 할 때, 프록시 객체가 실제 엔티티로 변하는 것이 아니다. 초기화가 되면 프록시 객체를 통해 실제 엔티티로 접근하는 것이다.
+- 프록시 객체는 엔티티 객체의 식별자(PK) 값을 보관하고 있다. 프록시 객체를 통해 엔티티를 조회할 때 식별자(PK) 값을 파라미터로 전달하는데, 프록시 객체는 식별자 값을 가지고 있기 때문에 만약 식별자 값을 조회하는 .getId()를 호출하더라도 프록시는 초기화 되지 않는다.
+    - 단, 엔티티 접근 방식을 프로퍼티(@Access(AccessType.PROPERTY))로 설정한 경우에만 초기화 하지 않고
+    - 엔티티 접근 방식을 필드(@Access(AccessType.FIED))로 설정하면 JPA는 프록시객체를 초기화 한다. 
 
 ![image](https://user-images.githubusercontent.com/74396651/203364081-45a9843b-db63-47c2-a468-e77bbe830fc9.png)
 
@@ -26,7 +31,29 @@
 <br>
 
 ## 프록시 확인하기
+- ### 프록시 인스턴스의 초기화 여부 확인
+    - PersistenceUnitUtil.isLoaded(Object entity)
+
+- ### 프록시 클래스 확인하는 방법
+    - entity.getClass.getName() 출력 -> javasist... or HibernateProxy가 나온다!
+- ### 프록시 강제 초기화
+    - org.hibernate.Hibernate.initialize(entity)
+- ### 참고, JPA 표준은 강제 초기화가 없다.
+    - 강제 호출 : member.getName()처럼 직접 값에 접근
+
+
+<br>
 
 # 즉시로딩, 지연로딩
 
 # CASCADE
+
+
+
+
+<br>
+<br>
+<br>
+<br>
+
+참조 : 인프런 김영한님 강의
