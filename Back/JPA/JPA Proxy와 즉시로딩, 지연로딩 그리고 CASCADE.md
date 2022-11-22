@@ -43,8 +43,47 @@
 
 
 <br>
+<hr>
+<br>
 
 # 즉시로딩, 지연로딩
+> &nbsp;쉽게 말해 엔티티를 조회할 때 객체(FK)를 어떻게 가져올까! 하는 방식이다.
+
+<br>
+
+## 지연 로딩
+- ### fetch = FetchType.LAZY
+
+![image](https://user-images.githubusercontent.com/74396651/203367711-78af3b20-4be0-4805-91a6-0bfcc3296a51.png)
+
+![image](https://user-images.githubusercontent.com/74396651/203367766-1d16050f-d296-48c0-8029-e2fd74893a16.png)
+
+![image](https://user-images.githubusercontent.com/74396651/203367829-f875b75a-9ae6-452b-a562-beba0f79f7c6.png)
+
+<br>
+
+## 즉시 로딩
+- ### fetch = FetchType.EAGER
+![image](https://user-images.githubusercontent.com/74396651/203367234-7e9f381c-1321-4874-903c-6913a15451fa.png)
+
+![image](https://user-images.githubusercontent.com/74396651/203367467-56ec4662-c190-42fc-8a94-4b97e43cb387.png)
+
+![image](https://user-images.githubusercontent.com/74396651/203367506-5ceb279f-1ebc-4675-81fd-3ce2bdf62fe5.png)
+
+<br>
+
+## 프록시와 즉시로딩 주의점
+- 가급적 모든 연관관계에서 지연 로딩만 사용하라!(특히 실무에서)
+- 즉시 로딩을 적용하면 예상하지 못한 SQL이 발생한다.
+- 즉시 로딩은 JPQL에서 N+1문제를 일으킨다.
+     - 하나를 조회했는데 추가로 N개의 select 쿼리가 나가는 것!  
+- @ManyToOne, @OneToOne은 기본이 EAGER다. --> 꼭 LAZY로 설정하기
+- @OneToMany, @ManyToMany는 기본이 LAZY다.
+- JPQL fetch join이나 엔티티 그래프 기능으로 끌어오면 된다! 그러니 LAZY로 안전하게 개발하자!
+
+<br>
+<hr>
+<br>
 
 # CASCADE
 
