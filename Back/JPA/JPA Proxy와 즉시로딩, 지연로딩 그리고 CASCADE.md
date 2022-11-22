@@ -85,10 +85,87 @@
 <hr>
 <br>
 
-# CASCADE
+# CASCADE(영속성 전이)
+> &nbsp;@ManyToOne, @OneToMany에 들어갈 수 있는 옵션이다. 트랜잭션이 일어날 때 변화가 생긴 Entity와 연관관계를 가진 Entity에 상태를 전파할 때 사용한다.
+
+## 주의점
+- #### CASCADE는 연관관계를 매핑하는 것과 아무 관련이 없다.
+- #### 엔티티를 영속화할 때 연관된 엔티티도 함께 영속화하는 편리함을 제공한다.
+- #### DB FK에 CASCADE 옵션을 다는 것과 비슷하다고 생각하장!(사실 똑같지 뭐..)
+
+## Entity 상태란
+- ### Transient
+     - JPA가 알지 못하는 상태를 의미한다.
+     - 객체를 생성하거나 변경하여도 JPA가 그 객체를 인지하지 못하고 있는 상태를 의미한다.
+- ### Persistent
+     - JPA가 관리중인 상태를 의미한다.
+     - Persistent 상태가 되더라도 바로 Insert가 발생해 DB에 저장되는 것이 아닌, Persistent에서 관리하고 있던 객체는 flush가 되는 시점에 DB에 저장된다.(1차 캐싱, Dirty Checking, Write Behind 등 기능 제공
+- ### Detached
+     - JPA가 더이상 객체를 관리하지 않는 상태를 의미한다.(1차 캐쉬에 없음)
+- ### Removed
+     - JPA가 현재 시점에는 관리하고 있지만 곧 삭제하기로 한 상태를 의미한다.
+
+> &nbsp;cascade 옵션은 위에서 설명한 상태 변화를 전파시키는 과정으로 생각할 수 있다.
+
+<br>
+
+## CASCADE 종류
+- ALL : 모두 적용
+- PERSIST : 영속
+- REMOVE : 삭제
+- MERGE : 병합
+- REFRESH : refresh
+- DETACH : detach
+
+## CASCADE 예시
+- ex) 부모 엔티티를 저장할 때 자식 엔티티도 함께 저장된다.
+
+![image](https://user-images.githubusercontent.com/74396651/203370899-bdeb6806-e80b-4cf0-9f93-b405a535689d.png)
+
+![image](https://user-images.githubusercontent.com/74396651/203376334-e6dfd44a-49a6-4cd7-a5ac-b9c672efa8e7.png)
+
+#### 부모(one) 객체가 Transient state에서 Persistent state로 넘어갈 때 cascade 옵션을 통해 @OneToMany 관계로 연결되어 있는 자식 객체도 Persistent 상태가 되어 자식 또한 같이 저장된다.
+
+#### 마찬가지로 부모 객체가 Removed state가 되면 자식들에게도 Removed state가 전파되어 트랜잭션이 커밋될 때 함께 데이터가 삭제된다.
+
+<br>
+
+# 고아 객체
+> &nbsp; 부모 엔티이와 연관관계가 끊어진 자식 엔티티!
 
 
 
+![image](https://user-images.githubusercontent.com/74396651/203376480-701eae5c-f5fd-436d-b7e5-b9212ad3d69a.png)
+
+
+
+## 고아객체 제거
+- orphanRemoval = true
+     - 고아 객체 제거 : 부모 엔티티와 연관관계가 끊어진 자식 엔티티를 자동으로 삭제한다.
+- DELETE FROM CHILDE WHERE ID=0 와 같다.
+```
+Parent parent = em.find(Parent.class, id);
+parent.getChildren().remove(0);
+
+과 같다.
+```
+<br>
+
+## 주의
+- 참조가 제거된 엔티티는 다른 곳에서 참조하지 않는 고아 객체로 판단해 삭제하는 기능이다.
+- 참조하는 곳이 하나일 때 사용해야 한다!
+- 특정 엔티티가 개인 소유할 때 사용해야 한다!
+- @OneToMany, @OneToone에서만 가능하다.
+
+> &nbsp; 개념적으로 부모를 제거하면 자식은 고아가 된다. 따라서 고아 객체 제거 기능을 활성화 하면, 부모를 제거할 때 자식도 함께 제거된다. CascadeType.REMOVE처럼 작동한다!
+
+<br>
+
+# CASCADE + 고아객체를 통해 생명주기 관리
+- ## CascadeType.ALl + orphanRemovel=true
+- 두 옵션을 모두 활성화 하면 부모 엔티티를 통해 자식의 생명주기를 관리할 수 있다.
+- 스스로 생명주기를 관리하는 엔티티는 em.persist()로 영속화, em.remove()로 제거할 수 있다.
+- 도메인 주도 설계(DDD)의 Aggregate Root 개념을 구현할 때 유용하다.
 
 <br>
 <br>
