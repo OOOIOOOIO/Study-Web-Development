@@ -225,15 +225,17 @@ public class StudentServiceTest {
 <br>
 
 # 깨달은 점
-- 1차 캐시의 엔티티의 식별자가 같은 경우 같은 타입의 엔티티이다.(이것 또한 같은 Transaction 안이여야 한다.) 골때리네... 
+- 1차 캐시에 있는 엔티티의 식별자와 조회하고자 하는 엔티티의 식별자가 같은 경우 같은 타입의 엔티티이다.(이것 또한 같은 Transaction 안이여야 한다.) 골때리네... 
 - 1차 캐시(영속성 컨텍스트)에서 엔티티를 가져오고 싶다면 이미 1차 캐시 안에 존재하던가 Transactioin 안이여야 한다.
 - 이 때문에 eager로 모두 한번에 가져오던지 lazy라면 transaction 내에서 조회든 뭐든 실행해야 한다.
-- @OneToMany에 잡힌 List<T> 또한 <code>SELECT 쿼리</code>가 나가서 데이터를 가져온다. 이 뜻은 뭐냐, List 또한 1차 캐쉬에 있다는 뜻이다.
-- 접근할 경우 1차 캐시를 뒤지고 없으면 DB에 접근한다는 뜻인데, transaction 내가 아니라면 바로 에러가 발생한다.
-- 이미 transaction이 끝나고 1차 캐시 내에 접근하고자 하는 entitiy가 없다면 <code>org.hibernate.LazyInitializationException: failed to lazily initialize a collection of role: com.jpa.pratice.domain.MathClass.studentList, could not initialize proxy - no Session</code>가 발생한다.
-- 그리고 요청이 끝나면 영속성 컨텍스트에서 1차 캐시가 사라진다. 이 의미는 같은 트랜잭션이 아니라면 계속 쿼리가 나간다는 뜻!
+- 엔티티를 조회할 경우 1차 캐시를 뒤지고 없으면 DB에 접근한다는 뜻인데, transaction 내가 아니라면 바로 에러가 발생한다.
+- 이미 transaction이 끝나면 영속성 컨텍스트가 종료되어 1차 캐시 또한 없어진다.
+- 트랜잭션이 끝난 후 entitiy에 접근하고자 한다면 <code>org.hibernate.LazyInitializationException: failed to lazily initialize a collection of role: com.jpa.pratice.domain.MathClass.studentList, could not initialize proxy - no Session</code>가 발생한다.
+- Transaction 바깥에서 proxy 객체를 조회하려고 하면 마찬가지로 에러가 발생한다.
+     - Transation이 끝나면 영속성 컨텍스트도 종료된다.    
+- 요청이 끝나면 영속성 컨텍스트에서 1차 캐시가 사라진다. 이 의미는 같은 트랜잭션이 아니라면 계속 쿼리가 나간다는 뜻이고 LAZY로 설정한 proxy객체든 
 - ##그래서 결론은 같은 Transaction 내에서 처리하자.....
-  
+
 <br>
 
 # 1차 캐시과 트랜잭션으로 인한 에러
