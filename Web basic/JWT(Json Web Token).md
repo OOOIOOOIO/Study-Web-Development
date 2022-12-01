@@ -5,6 +5,10 @@
 
 # JWT 구조
 > &nbsp;JWT는 Header, Payload, Signature로 이루어져있다. 각 부분은 Json형태로 저장되어 있으며, 각각 Base64로 인코딩 되어 있고, "."을 구분자로 각각의 부분을 구분한다.
+
+![image](https://user-images.githubusercontent.com/74396651/204966947-a7b76488-9589-4711-93e5-81a722aa0d56.png)
+
+
 - Header : 토큰에 대한 기본정보
 - Payload : 전달할 정보
 - Signature : 검증된 토큰 정보
