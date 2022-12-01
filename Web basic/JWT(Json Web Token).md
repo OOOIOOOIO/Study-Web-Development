@@ -8,6 +8,8 @@
 
 ![image](https://user-images.githubusercontent.com/74396651/204966947-a7b76488-9589-4711-93e5-81a722aa0d56.png)
 
+![image](https://user-images.githubusercontent.com/74396651/204975348-9840dc91-73d6-42a8-aff4-6d296da1593b.png)
+
 
 - Header : 토큰에 대한 기본정보
 - Payload : 전달할 정보
@@ -50,7 +52,6 @@
 ## Signature(서명)
 > &nbsp;토큰의 유효성을 검증할 때 사용되는 서명이다. 서명은 헤더와 페이로드의 값을 각각 BASE64로 인코딩하고 "."을 구분자로 붙여준다. 그리고 비밀키를 이용하여 헤더에 정의한 알고리즘으로 암호화한 후 다시 BASC64로 인코딩한다.
 
-![image](https://user-images.githubusercontent.com/74396651/202888605-70548e48-0dfc-421f-8ce6-2e01e1453105.png)
 
 <br>
 
