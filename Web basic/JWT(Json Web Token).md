@@ -1,6 +1,8 @@
 # JWT(Json Web Token)란
 > &nbsp;JWT는 개체와 개체 간 정보 전달 및 권한 인가(Authorization)를 위해 Json 형식 토큰이다. URL-safety하기 때문에 Header 또는 URL을 통해 전달한다.
 
+- [JWT 잘 성명해줌](https://escapefromcoding.tistory.com/255#header-parameters)
+
 <br>
 
 # JWT 구조
