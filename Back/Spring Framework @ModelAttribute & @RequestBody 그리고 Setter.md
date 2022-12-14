@@ -34,68 +34,51 @@
 - [상세](https://blog.karsei.pe.kr/59)
 
 
+> [참고1](https://minchul-son.tistory.com/546)
+> [참고2](https://hyeon9mak.github.io/model-attribute-without-setter/)
+
 <br>
 <hr>
 <br>
 
 ## @RequestBody
 > 얘도 결론부터 말하면 "@Setter는 전혀 필요 없다! 아무것도 필요없다 Spring HTTP Message Converter의 Jackson2HttpMessageConverter가 내부적으로 ObjectMapper를 사용해 바인딩해준다"
-> 
+> [상세히 설명되어 있네1](https://blogshine.tistory.com/445)
+> [상세히 2](https://blogshine.tistory.com/446)
+
+### 기본 생성자 존재
+- 알아서 바인딩 된다.
+
+### 기존 생성자(기본 생성자 없음)
+- 기본 생성자가 없는 상황이고 오직 파라미터를 가진 생성자가 1개만 있다면 Object를 생성할 수 있다.
+- Jackson에서 기본생성자, Getter, Setter가 없으면 자동으로 @JSonCreator를 해당 생성자에 붙여 작동하도록 도와준다.
+
+### 기존 생성자(기본 생성자 없은, 파라미터 1개)
+- 단일 생성자에 단일 파라미터가 있는 경우 JackSon이 @JsonCreator를 추가하는 기능이 동작하지 않는다.
+- 따라서 직접 생성자에 @JsonCreator를 붙여줘야 한다.
+
+<br>
+
+## 정리
+1. 일반적인 상황에서는 기본 생성자가 필수다.
+    - RestController에서 @RequestBody를 바인딩하기 위해 ObjectMapper를 사용하는데 기본 생성자로 객체를 생성하기 때문이다.
+2. Property 기반 클래스(@JsonProperty, @JsonAutoDetect)인 경우 기본 생성자 없이 생성이 가능하다.
+3. 기본 생성자가 없고, 파라미터를 받는 생성자가 있다면 생성이 가능하다.
+4. 기본 생성자가 없고, 파라미터를 "1개"만 받는 생성자라면 @JsonCreater를 추가해주어야 생성이 가능하다.
+5. Setter나 getter는 값을 바인딩할 때 필요하지 않지만!
+6. Setter와 Getter 모두 없는 경우 ObjectMapper가 바인딩하는데 오류가 생긴다.(둘 중 하나는 필요햐다. 값을 꺼내야 하므로 getter를 자주 사용한다)
+
+```
+// @Getter + 기본생성자 + @JsonCreator : 성공
+// @Getter + @JsonCreator : 성공
+// @Getter + 기본생성자(생략) : 성공
+// 기본생성자 : 실패
+
+==> @Getter는 필수!! + 기본 or 파라미터 생성자
+```
 
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-> [참고1](https://minchul-son.tistory.com/546)
-> [참고2](https://hyeon9mak.github.io/model-attribute-without-setter/)
