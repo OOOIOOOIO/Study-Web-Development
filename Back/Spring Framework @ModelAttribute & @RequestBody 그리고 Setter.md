@@ -46,6 +46,9 @@
 > [상세히 설명되어 있네1](https://blogshine.tistory.com/445)
 > [상세히 2](https://blogshine.tistory.com/446)
 
+![image](https://user-images.githubusercontent.com/74396651/207630479-f0fc5a22-4b18-4f64-be4a-47a01147c5f8.png)
+
+
 ### 기본 생성자 존재
 - 알아서 바인딩 된다.
 
