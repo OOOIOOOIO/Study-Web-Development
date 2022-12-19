@@ -48,5 +48,12 @@
 > 따라서 나의 경우는 Service에서 domain -> dto로 변환을 해 controller에 넘겨주는 것이 안전하다고 생각한다. 하지만 controller와 service 사이에 Mapper클래스를 만들어 Mapper에서 변환해주어도 상관없다! [Mapper 라이브러리](https://its-ward.tistory.com/entry/Spring-DTO%EC%99%80-Mapper)
 
 
+<br>
+<br>
+<br>
+<br>
+
+[참고](https://tecoble.techcourse.co.kr/post/2021-04-25-dto-layer-scope/)
+
 
 
