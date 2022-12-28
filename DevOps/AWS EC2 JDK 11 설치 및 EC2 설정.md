@@ -75,9 +75,11 @@ ls /usr/share/zoneinfo
 
 sudo nano /etc/sysconfig/clock
 
+"Asia/Seoul" 로 변경
+
 # timezone 변경
 
-sudo ln -sf /usr/share/zoneinfo/America/Los_Angeles /etc/localtime
+sudo ln -sf /usr/share/zoneinfo/Asia/Seoulsu /etc/localtime
 
 # 재부팅(인스턴스 페이지에서 인스턴스를 선택하고 인스턴스 상태, 인스턴스 재부팅을 차례로 선택)
 
