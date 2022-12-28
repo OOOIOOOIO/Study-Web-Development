@@ -31,6 +31,19 @@
 ## 파라미터 그룹 수정
 ![image](https://user-images.githubusercontent.com/74396651/209357022-516a155e-7b14-4ad5-97de-3cad73f1240b.png)
 
+## 보안그룹 수정
+
+## putty로 mysql 다운
+```
+sudo yum install mysql
+
+mysql -u 계정 -p -h Host주소(rds 엔드포인트)
+
+
+
+``
+
+
 # 인텔리제이 database 연결 성공
 ![image](https://user-images.githubusercontent.com/74396651/209365702-0ae614f7-9925-4cf8-866c-f3d912ef72fe.png)
 
