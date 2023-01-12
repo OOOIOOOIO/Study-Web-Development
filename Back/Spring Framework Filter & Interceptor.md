@@ -147,7 +147,57 @@ public class AppConfig{
 
 <br>
 
-## Interceptor 3가지 메소드 및 설정
+## Interceptor 3가지 메소드 및 사용법
+
+### HandlerInterceptor 구현
+```java
+public class CustomInterceptor implements HandlerInterceptor {
+ 
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+            throws Exception {
+        
+        System.out.println("preHandle1");
+        
+        
+        
+        return true;
+    }
+ 
+    @Override
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
+            ModelAndView modelAndView) throws Exception {
+        
+        System.out.println("postHandle1");
+        
+        
+    }
+ 
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
+            throws Exception {
+        
+        System.out.println("afterCompletion1");
+        
+        
+    }    
+    
+}
+```
+
+### Interceptor 등록 및 패턴 설정
+```java
+@Configuration
+public class WebConfig implements WebMvcConfigurer {
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new AuthCheckInterceptor())
+                .addPathPatterns("/**")
+                .excludePathPatterns("/api/auth/**");
+    }
+}
+```
 - preHandel()
    - 컨트롤러가 호출되기 전에 실행된다.
    - 컨트롤러가 실행 이전에 처리해야 할 작업이 있는 경우 혹은 요청정보를 가공하거나 추가하는 경우 사용한다.
