@@ -146,6 +146,46 @@ curl learning-springboot-webservice
 
 <hr>
 
+# git
+```
+# 설치
+sudo yum install git
+
+git --version
+
+# 폴더 생성
+mkdir ~/app && mkdir ~/app/step1
+
+# 이동
+cd ~/app/step1
+
+# git clone
+git clone 레포주소
+
+# 이동
+cd 레포이름(프로젝트명)
+
+ls or ll로 항목 보기
+
+# gradle 빌드해보기
+./gradlew test
+
+# 만약 Permission denied라면
+chmod +x ./gradlew
+
+# 다시 빌드
+./gradlew test
+```
+
+# 배포 스크립트
+```
+# 이동
+cd ~/app/step1
+
+# 생성
+vim deploy.sh
+```
+
 ## 기본적인 EC2 설정은 완료되었다! 이제 AWS RDS를 생성하러 가보자!
 [AWS RDS]()
 
