@@ -166,7 +166,7 @@ public class NetworkClient implements InitializingBean, DisposableBean{
 <hr>
 <br>
 
-## 빈 등록 초기화, 소멸 메소드 지정
+## 빈 등록 초기화, 소멸 메소드 지정(@Bean(initMethod = "init", destroyMethod = "close") // destroyMethod)
 ```java
 package com.core.lifecycle;
 
