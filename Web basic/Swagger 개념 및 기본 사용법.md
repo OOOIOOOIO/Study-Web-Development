@@ -162,4 +162,12 @@ public class ExcelV1Controller {
 ![image](https://user-images.githubusercontent.com/74396651/220810238-4e1e3644-405c-45ef-b180-127714961601.png)
 
 
+<br>
+<hr>
+<br>
+
+## Security와 함께 사용하기 
+
+.antMatchers("/swagger-ui/**", "/swagger-resources/**", "/swagger-resources", "/v3/api-docs").permitAll() 
+
 
