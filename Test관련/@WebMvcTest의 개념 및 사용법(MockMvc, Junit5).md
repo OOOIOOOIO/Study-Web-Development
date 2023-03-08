@@ -18,6 +18,7 @@
 
 ## Controller 테스트 @WebMvcTest + MvcMock 사용법!(대체적으로 MvcMock을 함께 사용한다.)
 - 우선 MockMvc는 웹 API를 테스트할 때 사용. Spring MVC 테스트의 시작점, HTTP GET, POST 등에 대한 API 테스트를 할 수 있다.
+- WithMockUser는 Spring Security를 테스트할 때 사용하는 어노테이션이다.[자세한 내용](https://smjeon.dev/etc/with-mock-user/)
 
 ### Controller
 ```java
@@ -60,7 +61,7 @@ public class HelloControllerTest {
     @Autowired
     private MockMvc mvc; // 웹 API를 테스트할 때 사용. Spring MVC 테스트의 시작점, HTTP GET, POST 등에 대한 API 테스트를 할 수 있다.
 
-    @WithMockUser(roles = "USER") // MockMvc에서만 작동하기 때문에 MockMvc로 테스트해야 한다. 
+    @WithMockUser(roles = "USER") // (Security)MockMvc에서만 작동하기 때문에 MockMvc로 테스트해야 한다. 
     @Test
     public void helloReturn() throws Exception {
         String hello = "hello";
@@ -73,7 +74,7 @@ public class HelloControllerTest {
 
     }
 
-    @WithMockUser(roles = "USER") // MockMvc에서만 작동하기 때문에 MockMvc로 테스트해야 한다. 
+    @WithMockUser(roles = "USER")  
     @Test
     void helloDTOReturn() throws Exception {
         String name = "hello";
