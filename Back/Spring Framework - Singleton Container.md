@@ -158,7 +158,7 @@ public void springContainer() {
   // 2. 조회 : 호출할 때마다 객체를 생성
   MemberService memberService2 = ac.getBean("memberService", MemberService.class);
 
-  // 참조값이 다른 것을 확인
+  // 참조값이 같은 것을 확인
   System.out.println("memberService : " + memberService1);
   System.out.println("memberService : " + memberService2);
 
@@ -276,7 +276,8 @@ public class StatefulServiceTest {
   
   /*
   console
-  // 잘못된 코드 결과 : price 필드가 공유되는데 클라이언트의 요청에 따라 값이 변경되기 때문에 공유필드는 조심해서 사용해야 한다! 스프링 빈은 항상 무상태(stateless)로 설계하자!
+  // 잘못된 코드 결과 : price 필드가 공유되는데 클라이언트의 요청에 따라 값이 변경되기 때문에 
+  // 공유필드는 조심해서 사용해야 한다! 스프링 빈은 항상 무상태(stateless)로 설계하자!
   name : userA / price : 10000
   name : userB / price : 20000
   userA price : 20000
