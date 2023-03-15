@@ -81,6 +81,31 @@
 ![image](https://user-images.githubusercontent.com/74396651/225312498-6d6440e1-8bf3-4101-beae-a3744a4cc0ec.png)
 
 
+<hr>
+
+## 10. SQL local서버 연결하기
+
+![image](https://user-images.githubusercontent.com/74396651/225313764-997997a5-c2ad-41dc-9d29-76bc617ad13f.png)
 
 
+## 11. 방화벽 설정(VPC)
+
+![image](https://user-images.githubusercontent.com/74396651/225317210-3bda8853-197a-4813-a6eb-3c313e4217d6.png)
+
+![image](https://user-images.githubusercontent.com/74396651/225317340-02ea0840-e56e-4049-ba39-cc0267000478.png)
+- 방화벽 규칙 만들기
+![image](https://user-images.githubusercontent.com/74396651/225322505-7cdb4556-36a4-479a-b2d4-4083b5a14016.png)
+
+## 12. MySQL - bind adress 설정
+외부에서 DB로 직접 접속하려면 아래 두가지가 만족해야 함
+
+1. 외부 ip 접근에 대해 해당 포트 방화벽이 열려있는가?
+
+2. 접근하려는 데몬이 0.0.0.0으로 떠 있는가?
+
+[참고](https://saii42.tistory.com/25)
+
+<img width="998" alt="image" src="https://user-images.githubusercontent.com/74396651/225326627-ac07d284-dd1e-4264-85b6-5b8f9ca27ac1.png">
+
+<img width="1005" alt="image" src="https://user-images.githubusercontent.com/74396651/225326774-c5efb7a8-d4c3-454c-8f73-3db1da9fcf06.png">
 
