@@ -45,10 +45,40 @@
 - 저희는 네트워크 승인을 진행토록 하겠습니다. 
 - 네트워크 추가를 클릭합니다.
 
+![image](https://user-images.githubusercontent.com/74396651/225287847-358119cb-b9df-4d0c-8354-1769c505066a.png)
+
+- 기입 후 완료 > 저장
+
+## 7. VM 엔진으로 돌아와서 SSH 연결
+
+![image](https://user-images.githubusercontent.com/74396651/225289439-9a13c6bb-8769-4e47-b2f1-aaa019528be5.png)
+
+![image](https://user-images.githubusercontent.com/74396651/225289547-75c4a51d-2492-413a-b329-d67bf075c563.png)
 
 
 
+<hr>
 
+## 8. SSH - mysql 설치 | [참고](https://velog.io/@seungsang00/Ubuntu-%EC%9A%B0%EB%B6%84%ED%88%AC%EC%97%90-MySQL-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0)
+- sudo passwd : 루트 비밀번호 설정
+- su -root : 루트로 사용자 변경
+
+<img width="778" alt="image" src="https://user-images.githubusercontent.com/74396651/225309840-db393961-d5a8-4ae6-bd0a-269cb160e355.png">
+
+<img width="846" alt="image" src="https://user-images.githubusercontent.com/74396651/225309977-b4352fdf-0c3f-41ca-8c90-345baf9c21e3.png">
+
+<img width="838" alt="image" src="https://user-images.githubusercontent.com/74396651/225310039-f546c6a6-faad-41a9-8d9c-750e17822e28.png">
+
+<img width="795" alt="image" src="https://user-images.githubusercontent.com/74396651/225310094-35fec854-a602-4a8c-9605-baf6c93aefb4.png">
+- for이 아니라 to다. grant all privileges on wero.* to wero@'%';
+
+## 9. SSH - Java 설치
+- sudo passwd : 루트 비밀번호 설정
+- su -root : 루트로 사용자 변경
+- sudo add-apt-repository ppa:openjdk-r/ppa : 설치 전 준비
+- sudo apt install openjdk-11-jdk : 설치
+
+![image](https://user-images.githubusercontent.com/74396651/225312498-6d6440e1-8bf3-4101-beae-a3744a4cc0ec.png)
 
 
 
