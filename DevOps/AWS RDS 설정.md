@@ -33,13 +33,15 @@
 
 ## 보안그룹 수정
 
-## putty로 mysql 다운
+## putty로 mysql 다운 및 접속
 ```
+- 다운
 sudo yum install mysql
 
+- 접속
 mysql -u 계정 -p -h Host주소(rds 엔드포인트)
 
-
+- 접속 후 사용자 및 데이터베이스 만들면 된다.
 
 ``
 
