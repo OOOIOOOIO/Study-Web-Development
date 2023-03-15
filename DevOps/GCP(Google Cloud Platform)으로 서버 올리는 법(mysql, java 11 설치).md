@@ -109,3 +109,11 @@
 
 <img width="1005" alt="image" src="https://user-images.githubusercontent.com/74396651/225326774-c5efb7a8-d4c3-454c-8f73-3db1da9fcf06.png">
 
+<hr>
+
+위와 같이 했으면 GCP SQL에서 만든 "사용자"를 가지고 로그인을 한다.
+## mysql -u wero-mysql -p -h ip주소
+
+### 이후 사용자 및 데이터베이스 생성 후 사용한다.
+
+# 와 로컬 mysql에서 삽질했네...
