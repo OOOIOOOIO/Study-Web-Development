@@ -117,3 +117,8 @@
 ### 이후 사용자 및 데이터베이스 생성 후 사용한다.
 
 # 와 로컬 mysql에서 삽질했네...
+
+<br>
+<br>
+
+[참고](https://coding-is-fun.tistory.com/10)
