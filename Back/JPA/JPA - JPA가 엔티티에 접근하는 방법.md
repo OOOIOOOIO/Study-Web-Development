@@ -59,7 +59,7 @@ public class Book {
 @Entity
 public class Book {
  
-    @NaturalId
+    @Id
     String isbn;
  
     ...
