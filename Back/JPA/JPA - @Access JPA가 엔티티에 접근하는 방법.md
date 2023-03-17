@@ -6,6 +6,7 @@
   - getter를 사용해 접근
 - @Access 어노테이션이 붙어있지 않다면 @Id의 위치로 접근 방식이 결정된다.
   - 필드에 붙어있는 경우 : 필드 접근
+  - 메서드(getter)에 붙어있는 경우 : 프로퍼티 접근
 
 ![image](https://user-images.githubusercontent.com/74396651/225780332-00dc8a6f-33eb-4e0b-996c-d88966edab71.png)
 
@@ -88,5 +89,9 @@ public class Book {
 <br>
 <br>
 <br>
+
+### 컬럼 매핑 레퍼런스 어노테이션
+![image](https://user-images.githubusercontent.com/74396651/225783757-47f71895-35d3-4d1e-a76f-3bf5568ac4dd.png)
+
 
 [참고](https://velog.io/@cmsskkk/JPA-Access)
