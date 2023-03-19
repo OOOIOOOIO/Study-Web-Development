@@ -58,10 +58,21 @@ ext {
 
 <hr>
 
+## 에러들
 
+### 403 에러 : The billing account for the owning project is disabled in state closed
+
+![image](https://user-images.githubusercontent.com/74396651/226161000-3fc4ebf3-16aa-4454-8f35-990a254a52e5.png)
+
+<hr>
+
+### 400 에러 : cannot insert legacy acl for an object when uniform bucket-level access is enabled
+
+acl 에런데...나는 그냥 코드에서 빼버렸다. 
 
 <br>
 <br>
+<br>br>
 
 [참고](https://dncjf64.tistory.com/313)
 
