@@ -112,7 +112,7 @@
 <hr>
 
 위와 같이 했으면 GCP SQL에서 만든 "사용자"를 가지고 로그인을 한다.
-## mysql -u wero-mysql -p -h ip주소
+## mysql -u wero -p -h ip주소
 
 ### 이후 사용자 및 데이터베이스 생성 후 사용한다.
 
