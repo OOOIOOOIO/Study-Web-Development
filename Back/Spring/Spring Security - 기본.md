@@ -1,4 +1,4 @@
-> OAuth2로 소셜 로그인을 하면서 Security와 많이 친해졌지만 그래도 한번 기본 흐름은 정리를 해야할 것 같아 정리한다. 아 그리고 2.7로 리팩토링하느라 조금 애먹었다.
+> OAuth2로 소셜 로그인을 하면서 Security와 많이 친해졌지만 그래도 한번 기본 흐름은 정리를 해야할 것 같아 정리한다. 
 
 # Spring Security란
 Spring Security는 Spring 기반의 애플리케이션의 보안(인증과 권한, 인가 등)을 담당하는 스프링 하위 프레임워크이다. Spring Security는 '인증'과 '권한'에 대한 부분을 Filter 흐름에 따라 처리하고 있다. Filter는 Dispatcher Servlet으로 가기 전에 적용되므로 가장 먼저 URL 요청을 받지만, Interceptor는 Dispatcher와 Controller사이에 위치한다는 점에서 적용 시기의 차이가 있다. 또한 Filter는 Spring Context 밖에 있기 때문에 예외처리를 하귀 위해선 예외처리용 필터를 하나 빼야한다.<br>
@@ -140,8 +140,11 @@ GrantAuthority는 현재 사용자(principal)가 가지고 있는 권한을 의�
 <br>
 <br>
 <br>
+[참고-공식 레퍼런스](https://docs.spring.io/spring-security/reference/reactive/oauth2/client/index.html)<br>
+[참고-깃헙](https://github.com/OOOIOOOIO/Web-Security-JWT-login-project/blob/master/src/main/java/com/sh/loginpratice/websecurityjwt/config/jwt/AuthTokenFilter.java)<br>
 [참고1](https://mangkyu.tistory.com/76)<br>
-[참고2](https://velog.io/@shkim1199/%EC%8A%A4%ED%94%84%EB%A7%81-%EC%8B%9C%ED%81%90%EB%A6%AC%ED%8B%B0-Spring-Security)
+[참고2](https://velog.io/@shkim1199/%EC%8A%A4%ED%94%84%EB%A7%81-%EC%8B%9C%ED%81%90%EB%A6%AC%ED%8B%B0-Spring-Security)<br>
+[참고3](https://velog.io/@kose/%EC%8A%A4%ED%94%84%EB%A7%81%EB%B6%80%ED%8A%B8-2.7.3-Security)
 
 
 
