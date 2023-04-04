@@ -6,9 +6,47 @@ Spring Security는 보안과 관련해서 체계적으로 많은 옵션을 제�
 
 <br>
 
+## 특징
+- 인증과 권한 부여에 대한 지원과 유연한 확장
+- 세션 고정, 클릭재킹, 사이트 간 요청 위조 등의 공격으로부터 보호
+- 모든 URL을 가로채어 인증을 요구한다.
+- 서블릿 API 통합
+```
+- 세션고정
+ - 사용자의 세션 ID라고도 하는 세션 식별자에 영향을 준 다음 이를 사용하여 계정에 액세스할 수 있게 하는 것
+- 클릭재킹
+ - 웹 사용자가 자신이 클릭하고 있다고 인지하는 것과 다른 어떤 것을 클릭하게 속이는 악의적인 기법
+- 서블릿
+ - 클라이언트가 어떠한 요청을 하며 그에 대한 결과를 다시 전송해주는 역할을 하는 자바 프로그램
+```
+<br>
+
 ## 인증관련 Architecture
 
 ![image](https://user-images.githubusercontent.com/74396651/229701389-edf0a699-ef02-4741-b34b-b7a0745eaf9a.png)
+
+- 요청이 들어오면 인증을 담당하는 필터(AuthenticationFilter)를 거친다. AuthenticationFilter는 사용자의 세션 ID(JSESSIONID)가 Security Context에 있는지 확인한다. Security Context에 세션 ID가 없다면 아래 로직을 수행한다.
+
+1. 사용자가 로그인 정보를 입력하고 인증 요청을 보냄(http request)
+
+2. AuthenticationFilter에서 UsernamePasswordAuthenticationToken을 생성
+
+3. AuthenticationFilter에게 인증용 객체(UsernamePasswordAuthenticationToken)을 AuthenticaionManager 에게 전달.
+(Manager는 등록된 AuthenticationProvider를 통해 사용자 정보를 조회)
+
+4. 실제 인증을 할 AuthenticationProvider에게 Authentication객체(UsernamePasswordAuthenticationToken)을 다시 전달한다.
+
+5. DB에서 사용자 인증 정보를 가져올 UserDetailsService 객체에게 사용자 아이디를 넘겨주고 DB에서 인증에 사용할 사용자 정보(사용자 아이디, 암호화된 패스워드, 권한 등)를 UserDetails(인증용 객체와 도메인 객체를 분리하지 않기 위해서 실제 사용되는 도메인 객체에 UserDetails를 상속하기도 한다.)라는 객체로 전달 받는다.
+
+6. AuthenticationProvider는 UserDetails 객체를 전달 받은 이후 실제 사용자의 입력정보와 UserDetails 객체를 가지고 인증을 시도한다.
+
+7.UserDetailsService는 DB에 저장된 회원의 비밀번호와 비교해 일치하면 UserDetails 인터페이스를 구현한 객체를 반환한다.
+
+8. AuthenticationProvider 인터페이스에 의해 사용자가 성공적으로 인증되면, 완전히 채워진 인증개체가 반환된다.
+
+9. AuthenticationManager는 획득한 완전히 채워진 인증개체를 관련 인증 필터(AuthenticationFilter)로 다시 반환한다
+
+10. 인증이 완료되면 사용자 정보를 가진 Authentication 객체를 SecurityContextHolder(spring security의 인메모리 세션저장소)에 담은 이후 성공시 AuthenticationSuccessHandle를 실행한다.(실패시 AuthenticationFailureHandler를 실행한다.)
 
 <br>
 
@@ -32,7 +70,7 @@ SecurityContextHolder는 보안 주체의 세부 정보를 포함하여 응용�
  
 
 ### SecurityContext
-Authentication을 보관하는 역할을 하며, SecurityContext를 통해 Authentication 객체를 꺼내올 수 있다.
+Authentication을 보관하는 역할을 하며, SecurityContext를 통해 Authentication 객체를 꺼내올 수 있다. 인증된 사용자의 정보(인증 개체)를 저장하는 공간
 
  
 
@@ -102,7 +140,8 @@ GrantAuthority는 현재 사용자(principal)가 가지고 있는 권한을 의�
 <br>
 <br>
 <br>
-[참고](https://mangkyu.tistory.com/76)
+[참고1](https://mangkyu.tistory.com/76)<br>
+[참고2](https://velog.io/@shkim1199/%EC%8A%A4%ED%94%84%EB%A7%81-%EC%8B%9C%ED%81%90%EB%A6%AC%ED%8B%B0-Spring-Security)
 
 
 
