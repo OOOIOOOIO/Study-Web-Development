@@ -5,7 +5,7 @@
 - EBS 볼륨 최대 30기가
 
 [Amazon Linux 인스턴스 사용 설명서](https://docs.aws.amazon.com/ko_kr/AWSEC2/latest/UserGuide/set-time.html)
-
+[ubuntu java 환경변수설정](https://velog.io/@alsdn9501/AWS-EC2-Java-11-%EC%84%A4%EC%B9%98)
 ## 다운 가능한 JDK 보기
 ```
 yum list java*jdk-devel
