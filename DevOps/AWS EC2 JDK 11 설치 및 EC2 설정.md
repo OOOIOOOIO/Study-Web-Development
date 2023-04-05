@@ -108,6 +108,7 @@ date
 
 
 ## 호스트 네임 변경(퍼블릭 DNS 이름 없이 호스트 네임 변경)
+[ubuntu에서 변경](https://soobarkbar.tistory.com/226)
 
 ```
 # 호스트네임변경
