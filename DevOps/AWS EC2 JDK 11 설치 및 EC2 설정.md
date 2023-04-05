@@ -1,3 +1,9 @@
+## EC2 인스턴스 생성
+- AMI 
+- 키페어 생성
+- 보안그룹 생성
+- EBS 볼륨 최대 30기가
+
 [Amazon Linux 인스턴스 사용 설명서](https://docs.aws.amazon.com/ko_kr/AWSEC2/latest/UserGuide/set-time.html)
 
 ## 다운 가능한 JDK 보기
