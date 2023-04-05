@@ -103,6 +103,7 @@ date
 ```
 ![image](https://user-images.githubusercontent.com/74396651/209346227-12dfbe24-d094-463f-a35f-07b42b51c7f5.png)
 
+[ubuntu timezone 변경](https://asufi.tistory.com/entry/AWS-AWS%EC%95%84%EB%A7%88%EC%A1%B4-EC2-Linuxubuntucentos-Timezone-%EC%84%A4%EC%A0%95)
 
 <hr>
 
