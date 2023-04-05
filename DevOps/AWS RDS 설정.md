@@ -34,6 +34,7 @@
 ## 보안그룹 수정
 
 ## putty로 mysql 다운 및 접속
+
 ```
 - 다운
 sudo yum install mysql
@@ -47,5 +48,6 @@ mysql -u 계정 -p -h Host주소(rds 엔드포인트)
 
 
 # 인텔리제이 database 연결 성공
+
 ![image](https://user-images.githubusercontent.com/74396651/209365702-0ae614f7-9925-4cf8-866c-f3d912ef72fe.png)
 
