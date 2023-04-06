@@ -195,5 +195,5 @@ vim deploy.sh
 ```
 
 ## 기본적인 EC2 설정은 완료되었다! 이제 AWS RDS를 생성하러 가보자!
-[AWS RDS]()
+[AWS RDS](https://github.com/OOOIOOOIO/Study-Web-Development/blob/master/DevOps/AWS%20RDS%20%EC%84%A4%EC%A0%95.md)
 
