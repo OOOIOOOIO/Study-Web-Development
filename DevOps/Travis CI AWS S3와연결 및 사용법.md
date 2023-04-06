@@ -29,3 +29,36 @@ Travis CI는 github에서 제공하는 무료 CI 서비스이다. Jenkins의 경
 ![image](https://user-images.githubusercontent.com/74396651/230344465-0534461e-4b77-4c93-9579-739c858e099e.png)
 
 <img width="379" alt="image" src="https://user-images.githubusercontent.com/74396651/230344625-d7c91e5d-7fb5-4e6f-aec5-98845a13c79b.png">
+
+<hr>
+
+6. AWS S3 접근용 IAM 만든 후 > Travis CI에 IAM Access key 적용
+- AmazonS3FullAccess
+- AWSCodeDeployFullAccess(CodeDeploy용)
+### setting
+![image](https://user-images.githubusercontent.com/74396651/230347553-81a2e25c-57da-44f2-8e23-ba2a19b20687.png)
+
+### Environment Variables
+
+![image](https://user-images.githubusercontent.com/74396651/230348023-a5179dfc-ccaf-41e2-bdca-1e58c0c23989.png)
+> 여기서 등록된 키들은 .travis.yml에서 $AWS_ACCESS_KEY, $AWS_SECRET_KEY란 이름으로 사용할 수 있다.
+> 이 키를 사용해 Jar를 관리할 S$ 버킷을 생성
+
+<hr>
+
+# .travis.yml 수정
+
+<img width="1041" alt="image" src="https://user-images.githubusercontent.com/74396651/230374780-3582dfba-6ddb-4ccb-ad35-9e30d9161824.png">
+
+# S3 버킷 생성 > git push > travis 확인 및 S3 확인
+
+![image](https://user-images.githubusercontent.com/74396651/230375028-49bf51f2-6d88-4187-b7fa-b769c00ba549.png)
+
+![image](https://user-images.githubusercontent.com/74396651/230375082-a0789998-e8c5-4b44-9e4d-310f94a3b1c3.png)
+
+<img width="1364" alt="image" src="https://user-images.githubusercontent.com/74396651/230375110-faa6f01a-557b-4e15-96d5-b9538f5c4529.png">
+
+
+
+
+
