@@ -1,5 +1,5 @@
 
-# IAM > 사용자 > 사용자 추가
+# Travis CI IAM > 사용자 > 사용자 추가
 
 <img width="1676" alt="image" src="https://user-images.githubusercontent.com/74396651/230345117-257b478a-5b45-471f-abaa-3cd6bd906da5.png">
 
@@ -153,8 +153,40 @@ sudo service codedeploy-agent start
 
 <hr>
 
+# 배포 자동화 구성(Spring boot)
+
+## scripts/deploy.sh
+
+<img width="247" alt="image" src="https://user-images.githubusercontent.com/74396651/230398045-95722a75-6d85-4ad2-a795-b207b5301b10.png">
+
+<img width="928" alt="image" src="https://user-images.githubusercontent.com/74396651/230398122-6784299c-8aa1-4221-9842-36385c91e192.png">
 
 
+## asspec.yml
+
+<img width="494" alt="image" src="https://user-images.githubusercontent.com/74396651/230402628-1214e6b5-f125-47c4-8381-964a5a674408.png">
+
+
+## .travis.yml
+
+<img width="858" alt="image" src="https://user-images.githubusercontent.com/74396651/230398518-9fd7ea30-3c26-4fe4-ae08-ea1e3ec6f0b8.png">
+
+
+## Travis CI성공
+
+![image](https://user-images.githubusercontent.com/74396651/230403399-2301ee74-7893-4d01-8221-565228c36afe.png)
+
+## S3 성공
+
+<img width="1302" alt="image" src="https://user-images.githubusercontent.com/74396651/230403838-5c534b6a-da3d-4073-a8cc-e26089c280fe.png">
+
+## CodeDeploy 성공
+
+<img width="1310" alt="image" src="https://user-images.githubusercontent.com/74396651/230403694-46f90ab9-3743-4036-a874-d21521489a53.png">
+
+## ec2 성공
+
+<img width="862" alt="image" src="https://user-images.githubusercontent.com/74396651/230403580-38f4244f-7a19-4ee9-805a-7e6383f7012f.png">
 
 
 
