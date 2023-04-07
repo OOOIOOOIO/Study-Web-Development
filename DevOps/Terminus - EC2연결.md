@@ -13,3 +13,5 @@
 # 접속하면 끝!
 
 <img width="507" alt="image" src="https://user-images.githubusercontent.com/74396651/230589942-2e825bfb-83cf-44b5-9254-e5be13d73a01.png">
+
+<img width="634" alt="image" src="https://user-images.githubusercontent.com/74396651/230590021-b2cdcf47-860d-4f9b-9d17-455ba049f06c.png">
