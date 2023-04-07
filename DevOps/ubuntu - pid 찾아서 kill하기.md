@@ -1,4 +1,4 @@
-# 프로세스 조회
+# 프로세스 조회(jar를 찾아야한다!)
 ps -ef | grep 프로세스명
 
 <img width="1523" alt="image" src="https://user-images.githubusercontent.com/74396651/230437881-20817ba2-af99-4a90-8384-7a06ff7ebf46.png">
