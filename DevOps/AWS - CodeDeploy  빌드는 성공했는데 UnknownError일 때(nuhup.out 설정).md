@@ -1,4 +1,4 @@
-## Unkown error
+## Unkown error일 경우...
 
 <img width="1325" alt="image" src="https://user-images.githubusercontent.com/74396651/230445698-cdec6bce-3880-4243-b53b-886a9ab1c6e6.png">
 
