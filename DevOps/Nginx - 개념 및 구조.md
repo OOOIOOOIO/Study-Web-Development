@@ -3,10 +3,13 @@ Nginx란 경량 웹 서버이다. 클라이언트로부터 요청을 받았을 �
 
 ## Reverse Proxy란
 
+![image](https://user-images.githubusercontent.com/74396651/231026766-ca554c09-4a11-411b-8b39-be4ca905130f.png)
+클라이언트는 가짜 서버에 요청(request)하면, 프록시 서버가 배후 서버(reverse server)로부터 데이터를 가져오는 역할을 한다. 여기서 프록시 서버가 Nginx, 리버스 서버가 응용프로그램 서버를 의미한다.
+웹 응용프로그램 서버에 리버스 프록시(Nginx)를 두는 이유는 요청(request)에 대한 버퍼링이 있기 때문이다. 클라이언트가 직접 App 서버에 직접 요청하는 경우, 프로세스 1개가 응답 대기 상태가 되어야만 한다. 따라서 프록시 서버를 둠으로써 요청을 배분하는 역할을 한다.
+
 <br>
 
 # Nginx의 흐름
-![image](https://user-images.githubusercontent.com/74396651/231024460-b48e2e80-1a5b-4cdb-bffb-5ebdc67c44f3.png)
 
 ```
 client -> nginx -> was(server) -> db 흐름
@@ -16,6 +19,14 @@ Nginx는 Event-Driven 구조로 동작하기 때문에 한 개 또는 고정된 
 이러한 Nginx의 장점 덕분에 단일 서버에서도 동시에 많은 연결을 처리할 수 있다.
 
 ## Event-Driven 
+
+![image](https://user-images.githubusercontent.com/74396651/231026862-38961afd-0dec-4539-951b-5c1f0e3a0453.png)
+
+Nginx는 비동기 처리 방식(Event-Drive) 방식을 채택하고 있다.
+
+- 동기(Synchronous) : A가 B에게 데이터를 요청했을 때, 이 요청에 따른 응답을 주어야만 A가 다시 작업 처리가 가능 (하나의 요청, 하나의 작업에 충실)
+
+- 비동기(Asynchronous) : A의 요청을 B가 즉시 주지 않아도, A의 유휴시간으로 또 다른 작업 처리가 가능한 방식
 
 <br>
 
