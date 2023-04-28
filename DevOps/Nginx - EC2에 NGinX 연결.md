@@ -1,4 +1,4 @@
- # EC2에 NGinX 설치
+ # EC2에 NGinX 설치(Unbutu)
 ```
 sudo apt-get install nginx
 
@@ -6,14 +6,27 @@ sudo apt-get install nginx
 
 <hr>
 
-# 시작 및 설치 확인
+# 명령어
 ```
 
 # 시작
-sudo systemctl start nginx  / sudo service nginx start
+sudo service nginx start / sudo systemctl start nginx
 
-# 확인
+# 재시작
+sudo service nginx restart
+
+# 중지
+sudo service nginx stop
+
+# 상태 확인
 sudo systemctl status nginx
+
+# 설정 reload
+sudo service nginx reload
+
+# 환경설정 파일 찾기
+sudo find / -name nginx.conf
+
 
 ```
 
@@ -48,7 +61,7 @@ sudo dpkg -l nginx
 
 <hr>
 
- # Nginx와 spinrg boot 연동
+ 
  
  ## Nginx 설정 파일로 이동
  ````
@@ -57,7 +70,15 @@ sudo dpkg -l nginx
  vim nginx.conf
  ````
  
-### http 블럭 안에
+## Nginx 기본 설정
+
+![image](https://user-images.githubusercontent.com/74396651/235079171-80611d38-63af-463a-8b47-edb1329849a7.png)
+
+- 텍스트 Core 모듈	: 코어 모듈은 대부분 환경 설정 파일의 최상단에 위치하며 한번만 사용할 수 있다. nginx의 기본적인 동작 방식을 정의한다.
+- Http 블록 :	웹서버에 대한 동작을 설정하는 영역으로, server 블록과 location 블록의 루트 블록이다.
+- Server 블록	: 하나의 웹사이트를 선언하는 데 사용된다. 가상 호스팅(Virtual Host)의 개념이다.
+- Location 블록	: server 블록 내에서 특정 URL을 처리하는 방법을 정의한다.
+- Events 블록	: 주로 네트워크 동작에 관련된 설정하는 영역으로, 이벤트 모듈을 사용한다.
 
 
 
